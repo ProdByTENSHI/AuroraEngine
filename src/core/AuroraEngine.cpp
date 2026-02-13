@@ -14,7 +14,6 @@ namespace Aurora {
 			-1, g_RendererFlags);
 
 		m_IsRunning = true;
-		Update();
 	}
 
 	AuroraEngine::~AuroraEngine() {
@@ -30,6 +29,21 @@ namespace Aurora {
 				switch (e.type) {
 				case SDL_QUIT:
 					m_IsRunning = false;
+					break;
+
+				case SDL_WINDOWEVENT:
+					switch (e.window.event) {
+					case SDL_WINDOWEVENT_RESIZED:
+						i32 _w = 0;
+						i32 _h = 0;
+
+						SDL_GetWindowSize(g_Window->m_Window, &_w, &_h);
+						SDL_UpdateWindowSurface(g_Window->m_Window);
+
+						g_Window->OnResize.Dispatch(_w, _h);
+
+						break;
+					}
 					break;
 				}
 			}
