@@ -1,5 +1,11 @@
 #include "globals/AuroraTypes.hpp"
 
-namespace Aurora {
+#include <SDL.h>
 
+namespace Aurora {
+	class AuroraEngine {
+	public:
+
+	private:
+	};
 }

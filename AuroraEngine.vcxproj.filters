@@ -18,6 +18,12 @@
     <ClCompile Include="src\core\AuroraEngine.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="src\window\Window.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\debug\Logger.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\core\AuroraEngine.hpp">
@@ -30,6 +36,12 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="include\tenshiUtil\eventsystem\EventSystem.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="include\window\Window.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="include\debug\Logger.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

@@ -20,12 +20,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\AuroraEngine.cpp" />
+    <ClCompile Include="src\debug\Logger.cpp" />
+    <ClCompile Include="src\window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\core\AuroraEngine.hpp" />
+    <ClInclude Include="include\debug\Logger.hpp" />
     <ClInclude Include="include\globals\AuroraTypes.hpp" />
     <ClInclude Include="include\globals\EngineGlobals.hpp" />
     <ClInclude Include="include\tenshiUtil\eventsystem\EventSystem.h" />
+    <ClInclude Include="include\window\Window.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
