@@ -21,11 +21,21 @@
   <ItemGroup>
     <ClCompile Include="src\core\AuroraEngine.cpp" />
     <ClCompile Include="src\debug\Logger.cpp" />
+    <ClCompile Include="src\ecs\ECS.cpp" />
+    <ClCompile Include="src\ecs\System.cpp" />
     <ClCompile Include="src\window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\core\AuroraEngine.hpp" />
     <ClInclude Include="include\debug\Logger.hpp" />
+    <ClInclude Include="include\ecs\Component.h" />
+    <ClInclude Include="include\ecs\ComponentArray.h" />
+    <ClInclude Include="include\ecs\components\EntityNameComponent.h" />
+    <ClInclude Include="include\ecs\components\TransformComponent.h" />
+    <ClInclude Include="include\ecs\ComponentTypes.h" />
+    <ClInclude Include="include\ecs\ECS.h" />
+    <ClInclude Include="include\ecs\ECS_Definitions.h" />
+    <ClInclude Include="include\ecs\System.h" />
     <ClInclude Include="include\globals\AuroraTypes.hpp" />
     <ClInclude Include="include\globals\EngineGlobals.hpp" />
     <ClInclude Include="include\tenshiUtil\eventsystem\EventSystem.h" />
@@ -121,7 +131,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)AuroraEngine/include/;$(SolutionDir)vendor/SDL2 Image/include;$(SolutionDir)vendor/SDL2/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)vendor/glm/;$(SolutionDir)AuroraEngine/include/;$(SolutionDir)vendor/SDL2 Image/include;$(SolutionDir)vendor/SDL2/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>

@@ -2,8 +2,9 @@
 
 #include <SDL.h>
 
-#include "globals/AuroraTypes.hpp"
 #include "debug/Logger.hpp"
+#include "ecs/ECS.h"
+#include "globals/AuroraTypes.hpp"
 
 #include "window/Window.hpp"
 
@@ -19,4 +20,7 @@ namespace Aurora {
 	// -- RENDERING
 	inline SDL_Renderer* g_Renderer = nullptr;
 	inline u8 g_RendererFlags = SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED;
+
+	// -- ECS
+	inline std::shared_ptr<Ecs> g_Ecs;
 }

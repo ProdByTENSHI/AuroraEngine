@@ -42,7 +42,7 @@ namespace Aurora {
 		}
 	
 	private:
-		chroma::Event<LogMessage> m_OnLog;
+		Aurora::Event<LogMessage> m_OnLog;
 
 	private:
 		void Process(LogMessage msg);

@@ -1,13 +1,13 @@
 #pragma once
 
+#include <algorithm>
+#include <atomic>
 #include <functional>
 #include <list>
-#include <vector>
 #include <mutex>
-#include <atomic>
-#include <algorithm>
+#include <vector>
 
-namespace chroma
+namespace Aurora
 {
 	// TODO: Make Thead-Safe
 	//! An Event Handler is the Subscriber to an Event that calls a Function when notified by the Event
@@ -51,11 +51,11 @@ namespace chroma
 		//! Function that gets called when notified
 		functionType m_Function;
 
-        //! Intern Counter that keeps track of the amount of Handlers
-        static std::atomic<unsigned int> idCounter;
+		//! Intern Counter that keeps track of the amount of Handlers
+		static std::atomic<unsigned int> idCounter;
 	};
 
-template <typename... Args> std::atomic<unsigned int> EventHandler<Args...>::idCounter;
+	template <typename... Args> std::atomic<unsigned int> EventHandler<Args...>::idCounter;
 
 	template <typename... Args> class Event
 	{
@@ -63,36 +63,36 @@ template <typename... Args> std::atomic<unsigned int> EventHandler<Args...>::idC
 		typedef EventHandler<Args...> eventHandlerType;
 
 		//! The Subscriber will get notified and invoke its function when the Event is dispatched
-        void Subscribe(const eventHandlerType& subscriber)
-        {
-            std::lock_guard<std::mutex> lock(m_Mutex);
-            m_Handlers.push_back(subscriber);
-        }
+		void Subscribe(const eventHandlerType& subscriber)
+		{
+			std::lock_guard<std::mutex> lock(m_Mutex);
+			m_Handlers.push_back(subscriber);
+		}
 
 		//! The Subscriber will no longer get notified when the Event is dispatched
-        void Unsubscribe(const eventHandlerType& subscriber)
-        {
-            std::lock_guard<std::mutex> lock(m_Mutex);
-            auto it = std::find(m_Handlers.begin(), m_Handlers.end(), subscriber);
-            if (it != m_Handlers.end())
-                m_Handlers.erase(it);
-        }
+		void Unsubscribe(const eventHandlerType& subscriber)
+		{
+			std::lock_guard<std::mutex> lock(m_Mutex);
+			auto it = std::find(m_Handlers.begin(), m_Handlers.end(), subscriber);
+			if (it != m_Handlers.end())
+				m_Handlers.erase(it);
+		}
 
 		//! Notifies every Event Handler that this Event was triggered with the given Arguments
-        void Dispatch(Args... params)
-        {
-            // copy handlers under lock to allow subscribe/unsubscribe during dispatch
-            std::vector<eventHandlerType> handlersCopy;
-            {
-                std::lock_guard<std::mutex> lock(m_Mutex);
-                handlersCopy.assign(m_Handlers.begin(), m_Handlers.end());
-            }
+		void Dispatch(Args... params)
+		{
+			// copy handlers under lock to allow subscribe/unsubscribe during dispatch
+			std::vector<eventHandlerType> handlersCopy;
+			{
+				std::lock_guard<std::mutex> lock(m_Mutex);
+				handlersCopy.assign(m_Handlers.begin(), m_Handlers.end());
+			}
 
-            for (const auto& subscriber : handlersCopy)
-            {
-                subscriber(params...);
-            }
-        }
+			for (const auto& subscriber : handlersCopy)
+			{
+				subscriber(params...);
+			}
+		}
 
 		// -- Operator(For Usage Convenience)
 		void operator+=(const eventHandlerType& other)

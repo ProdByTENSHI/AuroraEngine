@@ -17,7 +17,7 @@ namespace Aurora {
 		u8 m_CreationFlags;
 
 		// -- EVENTS
-		chroma::Event<u32, u32> OnResize;
+		Aurora::Event<u32, u32> OnResize;
 
 	};
 }

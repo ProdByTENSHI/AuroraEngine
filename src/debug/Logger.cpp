@@ -13,8 +13,8 @@ namespace Aurora {
 		auto _onLog = [this](LogMessage msg) {
 			m_Thread = std::thread(&Logger::Process, this, msg);
 			m_Thread.join();
-		};
-		m_OnLog += chroma::EventHandler<LogMessage>(_onLog);
+			};
+		m_OnLog += Aurora::EventHandler<LogMessage>(_onLog);
 	}
 
 	Logger::~Logger() {

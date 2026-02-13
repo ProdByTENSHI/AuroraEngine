@@ -1,14 +1,19 @@
 #pragma once
 
-	typedef unsigned char u8;
-	typedef unsigned short u16;
-	typedef unsigned int u32;
-	typedef unsigned long long u64;
+#include <bitset>
 
-	typedef char i8;
-	typedef short i16;
-	typedef int i32;
-	typedef long long i64;
+#define BIT(X) 1 << X
+#define OS_SEP '/'
 
-	typedef unsigned char byte;
-	typedef const char* charStr;
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned int u32;
+typedef unsigned long long u64;
+
+typedef char i8;
+typedef short i16;
+typedef int i32;
+typedef long long i64;
+
+typedef unsigned char byte;
+typedef const char* charStr;

@@ -15,9 +15,9 @@ namespace Aurora {
 
 	public:
 		// -- EVENTS
-		chroma::Event<> OnUpdate;
-		chroma::Event<> OnRender;
-		chroma::Event<> OnQuit;
+		Aurora::Event<> OnUpdate;
+		Aurora::Event<> OnRender;
+		Aurora::Event<> OnQuit;
 
 	private:
 		// Thread Safe Application Run State
