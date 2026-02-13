@@ -17,6 +17,11 @@ namespace Aurora {
 		m_OnLog += chroma::EventHandler<LogMessage>(_onLog);
 	}
 
+	Logger::~Logger() {
+		if (m_Thread.joinable())
+			m_Thread.join();
+	}
+
 	void Logger::Log(charStr msg, LogType type)
 	{
 		m_OnLog.Dispatch(LogMessage(type, msg));
@@ -30,6 +35,7 @@ namespace Aurora {
 
 		case LogType::Error:
 			std::cout << "[ERROR]: " << msg.m_Message << std::endl;
+			exit((i32)msg.m_Type);
 			break;
 
 		case LogType::Warning:
