@@ -8,10 +8,12 @@ namespace Aurora {
 		if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 			Logger::Instance().Log("Could not initialize SDL2", LogType::Error);
 
-		g_Window = new Window(g_WindowTitle, g_WindowWidth, 
+		g_Window = new Window(g_WindowTitle, g_WindowWidth,
 			g_WindowHeight, g_WindowFlags);
-		g_Renderer = SDL_CreateRenderer(g_Window->m_Window, 
+		g_Renderer = SDL_CreateRenderer(g_Window->m_Window,
 			-1, g_RendererFlags);
+
+		g_Ecs = std::make_shared<Ecs>();
 
 		m_IsRunning = true;
 	}

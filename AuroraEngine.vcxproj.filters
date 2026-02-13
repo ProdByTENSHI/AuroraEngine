@@ -30,6 +30,9 @@
     <ClCompile Include="src\ecs\System.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="src\ecs\components\EntityNameComponent.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\core\AuroraEngine.hpp">

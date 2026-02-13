@@ -1,9 +1,9 @@
 #pragma once
 
-#include <iostream>
-#include <sstream>
-#include <thread>
 #include <fstream>
+#include <iostream>
+#include <string_view>
+#include <thread>
 
 #include "globals/AuroraTypes.hpp"
 #include "tenshiUtil/eventsystem/EventSystem.h"
@@ -35,12 +35,11 @@ namespace Aurora {
 		Logger();
 		~Logger();
 
-		void Log(charStr msg,
+		void Log(const std::string& msg,
 			LogType type = LogType::Message) {
-
-			m_OnLog.Dispatch(LogMessage(type, msg));
+			m_OnLog.Dispatch(LogMessage(type, msg.c_str()));
 		}
-	
+
 	private:
 		Aurora::Event<LogMessage> m_OnLog;
 

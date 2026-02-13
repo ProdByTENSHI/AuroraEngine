@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\core\AuroraEngine.cpp" />
     <ClCompile Include="src\debug\Logger.cpp" />
+    <ClCompile Include="src\ecs\components\EntityNameComponent.cpp" />
     <ClCompile Include="src\ecs\ECS.cpp" />
     <ClCompile Include="src\ecs\System.cpp" />
     <ClCompile Include="src\window\Window.cpp" />

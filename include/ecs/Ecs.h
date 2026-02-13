@@ -5,8 +5,10 @@
 #include <map>
 #include <memory>
 #include <stack>
+#include <string>
 #include <type_traits>
 
+#include "debug/Logger.hpp"
 #include "ecs/Component.h"
 #include "ecs/ComponentArray.h"
 #include "ecs/ECS_Definitions.h"
@@ -64,7 +66,10 @@ namespace Aurora
 			m_EntitySignatures[entity].set(_type);
 			m_OnEntitySignatureChange.Dispatch(entity, m_EntitySignatures[entity]);
 
-			LOG("Added Component " << _typeName << " to Entity " << entity);
+			std::string _msg = "Added Component ";
+			_msg.append(_typeName).append(" to Entity ")
+				.append(std::to_string(entity));
+			Logger::Instance().Log(_msg);
 		}
 
 		template <IsBaseOfComponent T>

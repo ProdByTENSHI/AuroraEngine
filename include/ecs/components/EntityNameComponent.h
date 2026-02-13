@@ -5,15 +5,13 @@
 #include <string>
 
 namespace Aurora {
-class EntityNameComponent : public virtual Component {
-public:
-  explicit EntityNameComponent(const std::string &name);
+	class EntityNameComponent : public virtual Component {
+	public:
+		explicit EntityNameComponent(const std::string& name);
 
-  Node &Serialize() override;
-  void Deserialize(Node &data) override;
-  ComponentType GetType() override;
+		ComponentType GetType() override;
 
-public:
-  std::string m_Name = "Unnamed Entity";
-};
+	public:
+		std::string m_Name = "Unnamed Entity";
+	};
 } // namespace tenshi
