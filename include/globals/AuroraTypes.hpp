@@ -1,6 +1,5 @@
 #pragma once
 
-namespace Aurora {
 	typedef unsigned char u8;
 	typedef unsigned short u16;
 	typedef unsigned int u32;
@@ -13,4 +12,3 @@ namespace Aurora {
 
 	typedef unsigned char byte;
 	typedef const char* charStr;
-}

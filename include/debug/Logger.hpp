@@ -3,12 +3,13 @@
 #include <iostream>
 #include <sstream>
 #include <thread>
+#include <fstream>
 
 #include "globals/AuroraTypes.hpp"
 #include "tenshiUtil/eventsystem/EventSystem.h"
 
 namespace Aurora {
-	constexpr charStr DEBUG_OUTPUT_PATH = "output/Log.txt";
+	constexpr charStr DEBUG_OUTPUT_PATH = "Log.txt";
 
 	enum class LogType {
 		Message = 0x0,
@@ -35,7 +36,10 @@ namespace Aurora {
 		~Logger();
 
 		void Log(charStr msg,
-			LogType type = LogType::Message);
+			LogType type = LogType::Message) {
+
+			m_OnLog.Dispatch(LogMessage(type, msg));
+		}
 	
 	private:
 		chroma::Event<LogMessage> m_OnLog;
@@ -45,5 +49,6 @@ namespace Aurora {
 
 	private:
 		std::thread m_Thread;
+		std::ofstream m_OutputFile;
 	};
 }
