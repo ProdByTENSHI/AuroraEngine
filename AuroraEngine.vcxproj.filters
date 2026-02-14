@@ -48,6 +48,9 @@
     <ClCompile Include="src\ecs\components\TransformComponent.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="src\input\InputSystem.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\core\AuroraEngine.hpp">
@@ -102,6 +105,12 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="include\ecs\systems\StaticSpriteRenderer.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="include\input\InputSystem.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="include\input\InputState.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

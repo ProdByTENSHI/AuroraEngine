@@ -45,6 +45,15 @@ This allows complex game objects to be built from simple, reusable components wh
 
 ---
 
+## 🎮 Input System
+
+The Input System is double buffered which means that there is no access Lock Up.
+Instead of an Event Driven System we use a State Driven approach to handle Input.
+This allows us to check for Key Combinations, Key States etc without ugly Lambda
+Functions.
+
+---
+
 ## 🗺️ Tile Editor
 
 The engine also includes a built-in **Tile Editor** to streamline 2D level creation.

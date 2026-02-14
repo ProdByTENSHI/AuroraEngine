@@ -6,6 +6,7 @@
 #include "ecs/ECS.h"
 #include "globals/AuroraTypes.hpp"
 
+#include "input/InputSystem.hpp"
 #include "memory/ResourceManager.hpp"
 #include "rendering/MasterRenderer.hpp"
 #include "window/Window.hpp"
@@ -29,6 +30,9 @@ namespace Aurora {
 
 	// -- MEMORY
 	inline std::unique_ptr<ResourceManager> g_ResourceManager;
+
+	// -- INPUT
+	inline std::unique_ptr<InputSystem> g_InputSystem;
 
 	// -- THREADS
 	// Handles the Rendering and the SDL Functions that have to be done in the Main Thread

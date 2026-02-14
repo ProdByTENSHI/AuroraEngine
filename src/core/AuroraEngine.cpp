@@ -22,6 +22,7 @@ namespace Aurora {
 		g_Ecs = std::make_unique<Ecs>();
 		g_Ecs->Init();
 		g_ResourceManager = std::make_unique<ResourceManager>();
+		g_InputSystem = std::make_unique<InputSystem>();
 
 		m_MainThreadID = std::this_thread::get_id();
 
@@ -43,6 +44,7 @@ namespace Aurora {
 			// This must be done in the Main Thread
 			SDL_Event e;
 			while (SDL_PollEvent(&e)) {
+				// -- APPLICATION EVENTS --
 				switch (e.type) {
 				case SDL_QUIT:
 					m_IsRunning = false;
@@ -63,12 +65,22 @@ namespace Aurora {
 					}
 					break;
 				}
+
+				// -- OTHER --
+				m_UpdateThread
+					= std::thread([this, &e]() {g_InputSystem->Process(e);});
+				m_UpdateThread.join();
 			}
+
+			g_InputSystem->SwapBuffers();
 
 			m_UpdateThread = std::thread(_updateFunc);
 
 			if (m_UpdateThread.joinable())
 				m_UpdateThread.join();
+
+			m_UpdateThread = std::thread([this]() {g_InputSystem->ProcessFrameEnd();});
+			m_UpdateThread.join();
 
 			Render();
 		}
