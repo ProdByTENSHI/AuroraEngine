@@ -4,7 +4,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "ecs/Component.h"
-#include "tenshiUtil/Types.h"
+#include "globals/AuroraTypes.hpp"
 #include "tenshiUtil/eventsystem/EventSystem.h"
 
 namespace Aurora
@@ -15,8 +15,6 @@ namespace Aurora
 		TransformComponent(const glm::vec2& pos, const glm::vec2& rot,
 			const glm::vec2& scale);
 
-		Node& Serialize() override;
-		void Deserialize(Node& data) override;
 		ComponentType GetType() override;
 
 		void Translate(const glm::vec2& translation)

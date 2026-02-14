@@ -25,7 +25,7 @@ namespace Aurora
 		}
 
 		m_EntitySignatures[entity].reset();
-		m_OnEntitySignatureChange.Dispatch(entity, m_EntitySignatures[entity]);
+		OnEntitySignatureChange.Dispatch(entity, m_EntitySignatures[entity]);
 
 		m_EntityIdStack.push(entity);
 		--m_EntityCount;

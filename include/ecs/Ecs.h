@@ -69,7 +69,7 @@ namespace Aurora
 			m_ComponentArrays[_typeName]->m_EntityToComponent.insert(
 				std::make_pair(entity, &component));
 			m_EntitySignatures[entity].set(_type);
-			m_OnEntitySignatureChange.Dispatch(entity, m_EntitySignatures[entity]);
+			OnEntitySignatureChange.Dispatch(entity, m_EntitySignatures[entity]);
 
 			std::string _msg = "Added Component ";
 			_msg.append(_typeName).append(" to Entity ")
@@ -82,7 +82,7 @@ namespace Aurora
 		{
 			m_ComponentArrays[typeid(T).name()]->m_EntityToComponent.erase(entity);
 			m_EntitySignatures[entity].set(type, false);
-			m_OnEntitySignatureChange.Dispatch(entity, m_EntitySignatures[entity]);
+			OnEntitySignatureChange.Dispatch(entity, m_EntitySignatures[entity]);
 		}
 
 		// Pretty Expensive Operation so use this once, Cache the Pointer instead of
@@ -116,7 +116,7 @@ namespace Aurora
 
 	public:
 		// -- SYSTEMS
-		Event<Entity, Signature> m_OnEntitySignatureChange;
+		Event<Entity, Signature> OnEntitySignatureChange;
 
 		std::unique_ptr<StaticSpriteRenderer> m_StaticSpriteRenderer;
 

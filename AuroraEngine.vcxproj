@@ -23,6 +23,7 @@
     <ClCompile Include="src\debug\Logger.cpp" />
     <ClCompile Include="src\ecs\components\EntityNameComponent.cpp" />
     <ClCompile Include="src\ecs\components\StaticSpriteComponent.cpp" />
+    <ClCompile Include="src\ecs\components\TransformComponent.cpp" />
     <ClCompile Include="src\ecs\ECS.cpp" />
     <ClCompile Include="src\ecs\System.cpp" />
     <ClCompile Include="src\ecs\systems\StaticSpriteRenderer.cpp" />

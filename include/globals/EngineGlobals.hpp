@@ -7,6 +7,7 @@
 #include "globals/AuroraTypes.hpp"
 
 #include "memory/ResourceManager.hpp"
+#include "rendering/MasterRenderer.hpp"
 #include "window/Window.hpp"
 
 namespace Aurora {
@@ -21,6 +22,7 @@ namespace Aurora {
 	// -- RENDERING
 	inline SDL_Renderer* g_Renderer = nullptr;
 	inline u8 g_RendererFlags = SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED;
+	inline std::unique_ptr<MasterRenderer> g_MasterRenderer;
 
 	// -- ECS
 	inline std::unique_ptr<Ecs> g_Ecs;

@@ -16,7 +16,9 @@ namespace Aurora {
 		g_Renderer = SDL_CreateRenderer(g_Window->m_Window,
 			-1, g_RendererFlags);
 
+		g_MasterRenderer = std::make_unique<MasterRenderer>();
 		g_Ecs = std::make_unique<Ecs>();
+		g_Ecs->Init();
 		g_ResourceManager = std::make_unique<ResourceManager>();
 
 		m_IsRunning = true;
@@ -62,6 +64,7 @@ namespace Aurora {
 		SDL_RenderClear(Aurora::g_Renderer);
 
 		OnRender.Dispatch();
+		g_MasterRenderer->Render();
 
 		SDL_RenderPresent(Aurora::g_Renderer);
 	}
