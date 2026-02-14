@@ -22,8 +22,12 @@
     <ClCompile Include="src\core\AuroraEngine.cpp" />
     <ClCompile Include="src\debug\Logger.cpp" />
     <ClCompile Include="src\ecs\components\EntityNameComponent.cpp" />
+    <ClCompile Include="src\ecs\components\StaticSpriteComponent.cpp" />
     <ClCompile Include="src\ecs\ECS.cpp" />
     <ClCompile Include="src\ecs\System.cpp" />
+    <ClCompile Include="src\ecs\systems\StaticSpriteRenderer.cpp" />
+    <ClCompile Include="src\memory\MasterRenderer.cpp" />
+    <ClCompile Include="src\memory\ResourceManager.cpp" />
     <ClCompile Include="src\window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -32,15 +36,19 @@
     <ClInclude Include="include\ecs\Component.h" />
     <ClInclude Include="include\ecs\ComponentArray.h" />
     <ClInclude Include="include\ecs\components\EntityNameComponent.h" />
+    <ClInclude Include="include\ecs\components\StaticSpriteComponent.h" />
     <ClInclude Include="include\ecs\components\TransformComponent.h" />
     <ClInclude Include="include\ecs\ComponentTypes.h" />
     <ClInclude Include="include\ecs\ECS.h" />
     <ClInclude Include="include\ecs\ECS_Definitions.h" />
     <ClInclude Include="include\ecs\System.h" />
+    <ClInclude Include="include\ecs\systems\StaticSpriteRenderer.hpp" />
     <ClInclude Include="include\globals\AuroraTypes.hpp" />
     <ClInclude Include="include\globals\EngineGlobals.hpp" />
+    <ClInclude Include="include\rendering\MasterRenderer.hpp" />
     <ClInclude Include="include\tenshiUtil\eventsystem\EventSystem.h" />
     <ClInclude Include="include\window\Window.hpp" />
+    <ClInclude Include="include\memory\ResourceManager.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

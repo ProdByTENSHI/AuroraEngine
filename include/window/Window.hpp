@@ -18,6 +18,5 @@ namespace Aurora {
 
 		// -- EVENTS
 		Aurora::Event<u32, u32> OnResize;
-
 	};
 }

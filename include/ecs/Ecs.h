@@ -16,8 +16,13 @@
 #include "globals/AuroraTypes.hpp"
 #include "tenshiUtil/eventsystem/EventSystem.h"
 
+#include "ecs/systems/StaticSpriteRenderer.hpp"
+
 namespace Aurora
 {
+	// -- SYSTEMS ID ORDER
+	constexpr u32 STATIC_SPRITE_RENDERER_ID = 0;
+
 	template <typename Derived>
 	concept IsBaseOfComponent = std::is_base_of<Component, Derived>::value;
 	template <typename Derived>
@@ -112,6 +117,8 @@ namespace Aurora
 	public:
 		// -- SYSTEMS
 		Event<Entity, Signature> m_OnEntitySignatureChange;
+
+		std::unique_ptr<StaticSpriteRenderer> m_StaticSpriteRenderer;
 
 	private:
 		// Holds Component Arrays by their typename

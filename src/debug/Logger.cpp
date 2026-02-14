@@ -28,17 +28,20 @@ namespace Aurora {
 		switch (msg.m_Type) {
 		case LogType::Message:
 			m_OutputFile << "[LOG]: " << msg.m_Message << "\n";
+			m_OutputFile.flush();
 			std::cout << "[LOG]: " << msg.m_Message << std::endl;
 			break;
 
 		case LogType::Error:
 			m_OutputFile << "[ERROR]: " << msg.m_Message << "\n";
+			m_OutputFile.flush();
 			std::cout << "[ERROR]: " << msg.m_Message << std::endl;
 			exit((i32)msg.m_Type);
 			break;
 
 		case LogType::Warning:
 			m_OutputFile << "[WARNING]: " << msg.m_Message << "\n";
+			m_OutputFile.flush();
 			std::cout << "[WARNING]: " << msg.m_Message << std::endl;
 			break;
 		}

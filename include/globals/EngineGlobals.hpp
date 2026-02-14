@@ -6,6 +6,7 @@
 #include "ecs/ECS.h"
 #include "globals/AuroraTypes.hpp"
 
+#include "memory/ResourceManager.hpp"
 #include "window/Window.hpp"
 
 namespace Aurora {
@@ -22,5 +23,8 @@ namespace Aurora {
 	inline u8 g_RendererFlags = SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED;
 
 	// -- ECS
-	inline std::shared_ptr<Ecs> g_Ecs;
+	inline std::unique_ptr<Ecs> g_Ecs;
+
+	// -- MEMORY
+	inline std::unique_ptr<ResourceManager> g_ResourceManager;
 }
