@@ -39,7 +39,7 @@
     <ClCompile Include="src\memory\ResourceManager.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="src\memory\MasterRenderer.cpp">
+    <ClCompile Include="src\rendering\MasterRenderer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="src\ecs\systems\StaticSpriteRenderer.cpp">

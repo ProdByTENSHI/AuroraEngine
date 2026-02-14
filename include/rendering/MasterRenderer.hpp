@@ -14,12 +14,12 @@ namespace Aurora {
 
 	struct RenderCommand {
 	public:
-		SDL_Rect m_SrcRect;
-		SDL_Rect m_DstRect;
-		SDL_Texture* m_Texture;
-		f64 m_Angle;
+		SDL_Rect m_SrcRect = { 0, 0, 0, 0 };
+		SDL_Rect m_DstRect = { 0, 0, 100, 100 };
+		SDL_Texture* m_Texture = nullptr;
+		f64 m_Angle = 0;
 		SDL_RendererFlip m_Flip;
-		u8 m_Layer;
+		u8 m_Layer = 0;
 	};
 
 	class MasterRenderer {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ecs/ComponentTypes.h"
+#include "globals/AuroraTypes.hpp"
 
 namespace Aurora {
 	// Base Class for all ECS Components

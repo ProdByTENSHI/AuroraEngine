@@ -6,13 +6,11 @@
 #include <vector>
 
 namespace Aurora {
-	// Internally sorts the Entities by their Textures to minimize Texture Dereferencing
 	typedef struct StaticSpriteBatch {
 	public:
-		explicit StaticSpriteBatch(const std::string& path);
 
-		std::vector<Entity> m_Entities;
-		const SDL_Texture* m_Texture;
+		SDL_Texture* m_Texture;
+		std::vector<Entity> m_Entity;
 	};
 
 	class StaticSpriteRenderer : System {
@@ -26,6 +24,6 @@ namespace Aurora {
 		u8 m_RenderLayer = 0; // DEFAULT RENDER LAYER
 
 	private:
-		std::vector<StaticSpriteBatch> m_Batches;
+		std::vector<StaticSpriteBatch*> m_Batches;
 	};
 }

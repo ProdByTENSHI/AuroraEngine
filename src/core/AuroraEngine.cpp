@@ -11,6 +11,8 @@ namespace Aurora {
 		if (IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG) < 0)
 			Logger::Instance().Log("Could not initialize SDL Image", LogType::Error);
 
+		SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
+
 		g_Window = new Window(g_WindowTitle, g_WindowWidth,
 			g_WindowHeight, g_WindowFlags);
 		g_Renderer = SDL_CreateRenderer(g_Window->m_Window,
@@ -57,6 +59,7 @@ namespace Aurora {
 			}
 
 			OnUpdate.Dispatch();
+			Render();
 		}
 	}
 
@@ -66,6 +69,6 @@ namespace Aurora {
 		OnRender.Dispatch();
 		g_MasterRenderer->Render();
 
-		SDL_RenderPresent(Aurora::g_Renderer);
+		SDL_RenderPresent(g_Renderer);
 	}
 }

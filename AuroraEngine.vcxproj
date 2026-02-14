@@ -27,7 +27,7 @@
     <ClCompile Include="src\ecs\ECS.cpp" />
     <ClCompile Include="src\ecs\System.cpp" />
     <ClCompile Include="src\ecs\systems\StaticSpriteRenderer.cpp" />
-    <ClCompile Include="src\memory\MasterRenderer.cpp" />
+    <ClCompile Include="src\rendering\MasterRenderer.cpp" />
     <ClCompile Include="src\memory\ResourceManager.cpp" />
     <ClCompile Include="src\window\Window.cpp" />
   </ItemGroup>

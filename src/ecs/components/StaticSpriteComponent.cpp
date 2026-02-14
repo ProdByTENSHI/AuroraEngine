@@ -11,6 +11,10 @@ namespace Aurora {
 		m_Texture = g_ResourceManager->LoadTexture(path);
 	}
 
+	void StaticSpriteComponent::SetSpriteSheetData(u32 col, u32 row, u32 colNum, u32 rowNum)
+	{
+	}
+
 	ComponentType StaticSpriteComponent::GetType() {
 		return ComponentType::StaticSpriteType;
 	}
