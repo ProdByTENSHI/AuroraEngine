@@ -64,6 +64,7 @@ namespace Aurora {
 					break;
 				}
 			}
+
 			m_UpdateThread = std::thread(_updateFunc);
 
 			if (m_UpdateThread.joinable())
