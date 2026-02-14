@@ -12,6 +12,7 @@ namespace Aurora {
 			if (_cmd.m_SrcRect.w == 0 || _cmd.m_DstRect.h == 0) {
 				SDL_RenderCopyEx(g_Renderer, _cmd.m_Texture, NULL,
 					&_cmd.m_DstRect, _cmd.m_Angle, NULL, _cmd.m_Flip);
+				m_RenderCmdQueue.pop();
 				continue;
 			}
 
