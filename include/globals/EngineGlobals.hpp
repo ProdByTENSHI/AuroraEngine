@@ -29,4 +29,14 @@ namespace Aurora {
 
 	// -- MEMORY
 	inline std::unique_ptr<ResourceManager> g_ResourceManager;
+
+	// -- THREADS
+	// Handles the Rendering and the SDL Functions that have to be done in the Main Thread
+	inline std::thread::id m_MainThreadID;
+
+	// Handles the Update and the Input Tasks
+	inline std::thread m_UpdateThread;
+
+	// Handles the Memory related Tasks
+	inline std::thread m_ResourceThread;
 }

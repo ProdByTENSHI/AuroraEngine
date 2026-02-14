@@ -38,7 +38,6 @@ namespace Aurora {
 			OnUpdate.Dispatch();
 			};
 
-		m_UpdateThread = std::thread(_updateFunc);
 		while (m_IsRunning) {
 			// Process Event Queue before Updating
 			// This must be done in the Main Thread
@@ -65,6 +64,7 @@ namespace Aurora {
 					break;
 				}
 			}
+			m_UpdateThread = std::thread(_updateFunc);
 
 			if (m_UpdateThread.joinable())
 				m_UpdateThread.join();

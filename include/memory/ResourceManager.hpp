@@ -16,6 +16,8 @@ namespace Aurora {
 		// Loads Texture from SPRITE_LOCATION + path
 		SDL_Texture* LoadTexture(const std::string& path);
 
+	public:
+
 	private:
 		std::unordered_map<std::string, SDL_Texture*> m_Textures;
 	};
