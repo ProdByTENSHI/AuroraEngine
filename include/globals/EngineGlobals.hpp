@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SDL.h>
+#include <thread>
 
 #include "debug/Logger.hpp"
 #include "ecs/ECS.h"
@@ -30,17 +31,8 @@ namespace Aurora {
 
 	// -- MEMORY
 	inline std::unique_ptr<ResourceManager> g_ResourceManager;
+	inline std::thread g_ResourceThread;
 
 	// -- INPUT
 	inline std::unique_ptr<InputSystem> g_InputSystem;
-
-	// -- THREADS
-	// Handles the Rendering and the SDL Functions that have to be done in the Main Thread
-	inline std::thread::id m_MainThreadID;
-
-	// Handles the Update and the Input Tasks
-	inline std::thread m_UpdateThread;
-
-	// Handles the Memory related Tasks
-	inline std::thread m_ResourceThread;
 }

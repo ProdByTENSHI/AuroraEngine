@@ -109,9 +109,7 @@ namespace Aurora {
 
 	typedef struct ButtonState {
 	public:
-		bool m_Pressed = false;
-		bool m_Hold = false;
-		bool m_Released = false;
+		bool m_Down = false;
 	};
 
 	// The Input State is the complete Input State at the End of a Frame

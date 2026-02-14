@@ -44,7 +44,7 @@ namespace Aurora {
 		std::promise<SDL_Texture*> _promise;
 		std::future<SDL_Texture*> _future = _promise.get_future();
 
-		m_ResourceThread = std::thread([promise = std::move(_promise),
+		g_ResourceThread = std::thread([promise = std::move(_promise),
 			_loadFunc]() mutable
 			{
 				SDL_Texture* texture = _loadFunc();
@@ -52,7 +52,7 @@ namespace Aurora {
 			});
 		SDL_Texture* loadedTexture = _future.get();
 
-		m_ResourceThread.join();
+		g_ResourceThread.join();
 
 		return loadedTexture;
 	}

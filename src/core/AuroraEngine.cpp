@@ -24,8 +24,6 @@ namespace Aurora {
 		g_ResourceManager = std::make_unique<ResourceManager>();
 		g_InputSystem = std::make_unique<InputSystem>();
 
-		m_MainThreadID = std::this_thread::get_id();
-
 		m_IsRunning = true;
 	}
 
@@ -35,11 +33,9 @@ namespace Aurora {
 	}
 
 	void AuroraEngine::Update() {
-		auto _updateFunc = [this]() {
-			OnUpdate.Dispatch();
-			};
-
 		while (m_IsRunning) {
+			g_InputSystem->SwapBuffers();
+
 			// Process Event Queue before Updating
 			// This must be done in the Main Thread
 			SDL_Event e;
@@ -67,20 +63,10 @@ namespace Aurora {
 				}
 
 				// -- OTHER --
-				m_UpdateThread
-					= std::thread([this, &e]() {g_InputSystem->Process(e);});
-				m_UpdateThread.join();
+				g_InputSystem->Process(e);
 			}
 
-			g_InputSystem->SwapBuffers();
-
-			m_UpdateThread = std::thread(_updateFunc);
-
-			if (m_UpdateThread.joinable())
-				m_UpdateThread.join();
-
-			m_UpdateThread = std::thread([this]() {g_InputSystem->ProcessFrameEnd();});
-			m_UpdateThread.join();
+			OnUpdate.Dispatch();
 
 			Render();
 		}

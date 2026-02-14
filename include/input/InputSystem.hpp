@@ -15,7 +15,6 @@ namespace Aurora {
 		// Processes the given Event by converting it to the
 		// Aurora Engine intern Input State and triggering Events
 		void Process(const SDL_Event& e);
-		void ProcessFrameEnd();
 
 		// At each end of a Frame the Read State takes the final Write State
 		void SwapBuffers();
@@ -39,12 +38,9 @@ namespace Aurora {
 	private:
 		// Double Buffered Input State to prevent Data Races
 		// or locking the State up due to read write interference
-		InputState* m_WriteState;
+		InputState* m_CurrentState;
 
 		// When you want to read the Input State only access this
-		InputState* m_ReadState;
-
-		// Mutex to protect access to the input buffers
-		mutable std::mutex m_StateMutex;
+		InputState* m_PrevState;
 	};
 }

@@ -6,18 +6,16 @@
 
 namespace Aurora {
 	InputSystem::InputSystem() {
-		m_WriteState = new InputState();
-		m_ReadState = new InputState();
+		m_CurrentState = new InputState();
+		m_PrevState = new InputState();
 	}
 
 	InputSystem::~InputSystem() {
-		delete m_ReadState;
-		delete m_WriteState;
+		delete m_PrevState;
+		delete m_CurrentState;
 	}
 
 	void InputSystem::Process(const SDL_Event& e) {
-		std::lock_guard<std::mutex> _lock(m_StateMutex);
-
 		switch (e.type) {
 			Key _key;
 			MouseButton _mouseButton;
@@ -26,26 +24,14 @@ namespace Aurora {
 		case SDL_EventType::SDL_KEYDOWN:
 			_key = SDLKeyToEngine(e.key.keysym.sym);
 
-			// If the Key was pressed in the previous frame it will be counted as hold
-			if (m_ReadState->m_Keys[(u16)_key].m_Pressed ||
-				m_ReadState->m_Keys[(u16)_key].m_Hold) {
-				m_WriteState->m_Keys[(u16)_key].m_Pressed = false;
-				m_WriteState->m_Keys[(u16)_key].m_Hold = true;
-
-				break;
-			}
-
-			m_WriteState->m_Keys[(u16)_key].m_Released = false;
-			m_WriteState->m_Keys[(u16)_key].m_Pressed = true;
+			m_CurrentState->m_Keys[(u16)_key].m_Down = true;
 
 			break;
 
 		case SDL_EventType::SDL_KEYUP:
 			_key = SDLKeyToEngine(e.key.keysym.sym);
 
-			m_WriteState->m_Keys[(u16)_key].m_Pressed = false;
-			m_WriteState->m_Keys[(u16)_key].m_Hold = false;
-			m_WriteState->m_Keys[(u16)_key].m_Released = true;
+			m_CurrentState->m_Keys[(u16)_key].m_Down = false;
 
 			break;
 
@@ -53,84 +39,53 @@ namespace Aurora {
 		case SDL_EventType::SDL_MOUSEBUTTONDOWN:
 			_mouseButton = SDLMouseButtonToEngine(e.button.button);
 
-			if (m_ReadState->m_MouseButtons[(u16)_mouseButton].m_Pressed ||
-				m_ReadState->m_MouseButtons[(u16)_mouseButton].m_Hold) {
-				m_WriteState->m_MouseButtons[(u16)_mouseButton].m_Pressed = false;
-				m_WriteState->m_MouseButtons[(u16)_mouseButton].m_Hold = true;
-
-				break;
-			}
-
-			m_WriteState->m_MouseButtons[(u16)_mouseButton].m_Released = false;
-			m_WriteState->m_MouseButtons[(u16)_mouseButton].m_Pressed = true;
+			m_CurrentState->m_MouseButtons[(u16)_mouseButton].m_Down = true;
 
 			break;
 
 		case SDL_EventType::SDL_MOUSEBUTTONUP:
 			_mouseButton = SDLMouseButtonToEngine(e.button.button);
 
-			m_WriteState->m_MouseButtons[(u16)_mouseButton].m_Released = true;
-			m_WriteState->m_MouseButtons[(u16)_mouseButton].m_Hold = false;
-			m_WriteState->m_MouseButtons[(u16)_mouseButton].m_Pressed = false;
+			m_CurrentState->m_MouseButtons[(u16)_mouseButton].m_Down = false;
 
 			break;
 		}
 	}
 
-	void InputSystem::ProcessFrameEnd() {
-		for (i32 i = 0; i < GetInputState().m_Keys.size(); i++) {
-		}
-	}
-
 	void InputSystem::SwapBuffers() {
-		std::lock_guard<std::mutex> _lock(m_StateMutex);
-		std::swap(m_ReadState, m_WriteState);
+		std::memcpy(m_PrevState, m_CurrentState, sizeof(InputState));
 	}
 
 	bool InputSystem::IsKeyPressed(Key key) {
-		if (!GetInputState().m_Keys[(u16)key].m_Hold)
-			return false;
-
-		return true;
+		return m_CurrentState->m_Keys[(u16)key].m_Down
+			&& !m_PrevState->m_Keys[(u16)key].m_Down;
 	}
 
 	bool InputSystem::IsKeyHeld(Key key) {
-		if (!GetInputState().m_Keys[(u16)key].m_Pressed)
-			return false;
-
-		return true;
+		return m_CurrentState->m_Keys[(u16)key].m_Down;
 	}
 
 	bool InputSystem::IsKeyReleased(Key key) {
-		if (!GetInputState().m_Keys[(u16)key].m_Released)
-			return false;
-
-		return true;
+		return !m_CurrentState->m_Keys[(u16)key].m_Down
+			&& m_PrevState->m_Keys[(u16)key].m_Down;
 	}
 
 	bool InputSystem::IsMouseButtonPressed(MouseButton button) {
-		if (!GetInputState().m_Keys[(u16)button].m_Hold)
-			return false;
-
-		return true;
+		return m_CurrentState->m_MouseButtons[(u16)button].m_Down
+			&& !m_PrevState->m_MouseButtons[(u16)button].m_Down;
 	}
 
 	bool InputSystem::IsMouseButtonHeld(MouseButton button) {
-		if (!GetInputState().m_Keys[(u16)button].m_Pressed)
-			return false;
-
-		return true;
+		return m_CurrentState->m_MouseButtons[(u16)button].m_Down;
 	}
 
 	bool InputSystem::IsMouseButtonReleased(MouseButton button) {
-		if (!GetInputState().m_Keys[(u16)button].m_Released)
-			return false;
-
-		return true;
+		return !m_CurrentState->m_MouseButtons[(u16)button].m_Down
+			&& m_PrevState->m_MouseButtons[(u16)button].m_Down;
 	}
 
 	InputState InputSystem::GetInputState() {
-		return *m_ReadState;
+		return *m_PrevState;
 	}
 
 	Key InputSystem::SDLKeyToEngine(SDL_Keycode code)
