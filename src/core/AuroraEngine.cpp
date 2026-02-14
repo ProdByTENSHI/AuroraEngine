@@ -23,6 +23,8 @@ namespace Aurora {
 		g_Ecs->Init();
 		g_ResourceManager = std::make_unique<ResourceManager>();
 
+		m_MainThreadID = std::this_thread::get_id();
+
 		m_IsRunning = true;
 	}
 
@@ -32,8 +34,14 @@ namespace Aurora {
 	}
 
 	void AuroraEngine::Update() {
+		auto _updateFunc = [this]() {
+			OnUpdate.Dispatch();
+			};
+
+		m_UpdateThread = std::thread(_updateFunc);
 		while (m_IsRunning) {
 			// Process Event Queue before Updating
+			// This must be done in the Main Thread
 			SDL_Event e;
 			while (SDL_PollEvent(&e)) {
 				switch (e.type) {
@@ -58,7 +66,9 @@ namespace Aurora {
 				}
 			}
 
-			OnUpdate.Dispatch();
+			if (m_UpdateThread.joinable())
+				m_UpdateThread.join();
+
 			Render();
 		}
 	}
