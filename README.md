@@ -16,6 +16,8 @@ This project is a custom-built 2D game engine focused on:
 
 Unlike traditional single-threaded engines where debugging tools can impact runtime performance, this engine separates responsibilities across threads to ensure that **game logic remains smooth and uninterrupted**.
 
+The Project Trello Board can be found here: https://trello.com/b/xrdjiR9K/aurora-engine
+
 ---
 
 ## 🧠 Architecture Philosophy
