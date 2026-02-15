@@ -7,10 +7,12 @@
 
 namespace Aurora
 {
-	Shader::Shader() {}
+	u32 Shader::s_IdCount = 0;
+
+	Shader::Shader() : m_Id(s_IdCount++) {}
 
 	Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath)
-		: m_Program(0), m_VertexShader(0), m_FragmentShader(0)
+		: m_Program(0), m_VertexShader(0), m_FragmentShader(0), m_Id(s_IdCount++)
 	{
 		std::string vertexSource = LoadShader(vertexPath);
 		std::string fragmentSource = LoadShader(fragmentPath);

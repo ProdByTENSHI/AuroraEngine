@@ -22,7 +22,8 @@
 namespace Aurora
 {
 	// -- SYSTEMS ID ORDER
-	constexpr u32 STATIC_SPRITE_RENDERER_ID = 0;
+	constexpr u32 SPRITE_RENDERER_ID = 0;
+	constexpr u32 SPRITE_SHEET_RENDERER_ID = 1;
 
 	template <typename Derived>
 	concept IsBaseOfComponent = std::is_base_of<Component, Derived>::value;
@@ -118,6 +119,9 @@ namespace Aurora
 	public:
 		// -- SYSTEMS
 		Event<Entity, Signature> OnEntitySignatureChange;
+
+		std::unique_ptr<SpriteRenderer> m_SpriteRenderer;
+		std::unique_ptr<SpriteSheetRenderer> m_SpriteSheetRenderer;
 
 	private:
 		// Holds Component Arrays by their typename

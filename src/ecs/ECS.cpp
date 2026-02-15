@@ -44,6 +44,23 @@ namespace Aurora
 
 	void Ecs::InitSystems()
 	{
+		Signature _sig;
+
+		// -- SPRITE RENDERER
+		_sig.set(ComponentType::TransformType);
+		_sig.set(ComponentType::SpriteType);
+
+		m_SpriteRenderer = std::make_unique<SpriteRenderer>(_sig,
+			SPRITE_RENDERER_ID);
+		_sig.reset();
+
+		// -- SPRITE SHEET RENDERER
+		_sig.set(ComponentType::TransformType);
+		_sig.set(ComponentType::SpriteSheetType);
+
+		m_SpriteSheetRenderer = std::make_unique<SpriteSheetRenderer>(_sig,
+			SPRITE_SHEET_RENDERER_ID);
+		_sig.reset();
 	}
 
 	u32 Ecs::GetNextEntityId()

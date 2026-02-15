@@ -12,7 +12,9 @@ namespace Aurora {
 		// create a simple handler and subscribe it to the event
 		auto _onLog = [this](LogMessage msg) {
 			m_Thread = std::thread(&Logger::Process, this, msg);
-			m_Thread.join();
+
+			if (m_Thread.joinable())
+				m_Thread.join();
 			};
 		m_OnLog += Aurora::EventHandler<LogMessage>(_onLog);
 	}

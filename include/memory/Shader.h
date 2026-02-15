@@ -7,6 +7,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "globals/AuroraTypes.hpp"
+
 namespace Aurora
 {
 	constexpr unsigned int INVALID_SHADER = 0xFFFFF;
@@ -33,6 +35,12 @@ namespace Aurora
 		void SetUniformMat4(const std::string& name, const glm::mat4& mat);
 
 		inline GLuint GetProgram() { return m_Program; }
+
+	public:
+		static u32 s_IdCount;
+
+		// Internal Shader ID
+		const u32 m_Id;
 
 	private:
 		// Create Shader from Vertex Shader Source and Fragment Shader Source
