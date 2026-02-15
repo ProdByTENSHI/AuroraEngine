@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 
 #include "globals/AuroraTypes.hpp"
-#include "resources/Shader.h"
+#include "memory/Shader.h"
 
 namespace Aurora
 {

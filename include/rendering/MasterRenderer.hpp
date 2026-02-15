@@ -1,9 +1,11 @@
 #pragma once
 
-#include <SDL.h>
+#include <memory>
 #include <queue>
 
 #include "globals/AuroraTypes.hpp"
+#include "tenshiUtil/memory/Ssbo.h"
+#include "tenshiUtil/memory/UniformBuffer.h"
 
 namespace Aurora {
 	constexpr u8 MAX_LAYERS = 32;
@@ -25,6 +27,10 @@ namespace Aurora {
 		// Push Render Commands to this Queue to draw them to the Screen
 		std::queue<RenderCommand> m_RenderCmdQueue;
 
+		Ssbo m_TransformsSsbo;
+		UniformBuffer m_EntityIdsUbo;
+
 	private:
+		std::shared_ptr<Shader> m_SpriteShader = nullptr;
 	};
 }

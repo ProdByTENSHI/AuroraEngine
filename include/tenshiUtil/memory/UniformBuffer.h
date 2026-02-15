@@ -4,7 +4,7 @@
 #include <string>
 
 #include "globals/AuroraTypes.hpp"
-#include "resources/Shader.h"
+#include "memory/Shader.h"
 
 namespace Aurora
 {

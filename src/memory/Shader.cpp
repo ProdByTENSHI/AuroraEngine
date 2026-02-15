@@ -170,7 +170,7 @@ namespace Aurora
 		{
 			std::cerr << "WARNING: Ssbo '" << name << "' does not exist" << std::endl;
 			GLint count;
-			glGetProgramiv(m_Program, GL_ACTIVE_memory, &count);
+			glGetProgramiv(m_Program, GL_ACTIVE_RESOURCES, &count);
 			for (int i = 0; i < count; i++)
 			{
 				char name[100];

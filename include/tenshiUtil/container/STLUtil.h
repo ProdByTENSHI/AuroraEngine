@@ -26,9 +26,6 @@ namespace Aurora {
 
 			typename std::vector<T>::const_iterator _it =
 				std::find(vec.begin(), vec.end(), element);
-			if (_it == vec.end())
-				Logger::Instance().Log("Could not find given Element. Element Type: " + typeid(T).name()
-					, LogType::Warning);
 
 			return _it;
 		}
@@ -45,11 +42,6 @@ namespace Aurora {
 
 			typename std::vector<T>::iterator _it =
 				std::find(vec.begin(), vec.end(), element);
-			if (_it == vec.end()) {
-				Logger::Instance().Log("Could not find Element of Type "
-					+ typeid(T).name()
-					, LogType::Warning);
-			}
 
 			return _it;
 		}
@@ -61,8 +53,6 @@ namespace Aurora {
 					return true;
 			}
 
-			Logger::Instance().Log("Element of Type " + typeid(T).name(),
-				LogType::Warning);
 			return false;
 		}
 	};

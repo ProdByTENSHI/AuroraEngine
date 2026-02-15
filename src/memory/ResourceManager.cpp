@@ -1,56 +1,51 @@
 #include "memory/ResourceManager.hpp"
 
-#include <SDL_image.h>
 #include <future>
+#include <stb_image.h>
 #include <string>
 
 #include "debug/Logger.hpp"
 #include "globals/EngineGlobals.hpp"
 
 namespace Aurora {
-	SDL_Texture* ResourceManager::LoadTexture(const std::string& path)
+	std::shared_ptr<Texture> ResourceManager::LoadTexture(const std::string& path)
 	{
-		auto _loadFunc = [this, path]() -> SDL_Texture* {
-			auto _it = m_Textures.find(path);
-			if (_it != m_Textures.end()) {
+		auto _loadFunc = [this, path]() -> std::shared_ptr<Texture> {
+			if (m_Textures.find(path) != m_Textures.end())
 				return m_Textures[path];
+
+			std::string _loc = SPRITE_LOCATION;
+			_loc += OS_SEP;
+			_loc.append(path);
+
+			std::cout << _loc << std::endl;
+			std::shared_ptr<Texture> _texture = std::make_shared<Texture>(_loc);
+			if (_texture == nullptr || !_texture->GetCreationStatus())
+			{
+				Logger::Instance().Log("Could not load Texture " + _loc,
+					LogType::Error);
+				return nullptr;
 			}
 
-			std::string _finalPath = SPRITE_LOCATION;
-			_finalPath += path;
+			_texture->m_Name = path;
 
-			SDL_Surface* surf = IMG_Load(_finalPath.c_str());
-			if (surf == nullptr) {
-				Logger::Instance().Log("Could not load Image from path "
-					+ _finalPath, LogType::Error);
-			}
+			m_Textures.insert(std::make_pair(path, _texture));
 
-			SDL_Texture* texture = SDL_CreateTextureFromSurface(g_Renderer, surf);
-			if (texture == nullptr) {
-				Logger::Instance().Log("Could not create Texture from Surface "
-					+ _finalPath, LogType::Error);
-			}
+			Logger::Instance().Log("Loaded Texture " + path, LogType::Message);
 
-			SDL_FreeSurface(surf);
-
-			m_Textures.insert(std::make_pair(path, texture));
-
-			Logger::Instance().Log("Loaded Texture from Path " + _finalPath,
-				LogType::Message);
-
-			return texture;
+			return _texture;
 			};
 
-		std::promise<SDL_Texture*> _promise;
-		std::future<SDL_Texture*> _future = _promise.get_future();
+		std::promise<std::shared_ptr<Texture>> _promise;
+		std::future<std::shared_ptr<Texture>> _future = _promise.get_future();
 
 		g_ResourceThread = std::thread([promise = std::move(_promise),
 			_loadFunc]() mutable
 			{
-				SDL_Texture* texture = _loadFunc();
+				std::shared_ptr<Texture> texture = _loadFunc();
 				promise.set_value(texture);
 			});
-		SDL_Texture* loadedTexture = _future.get();
+		std::shared_ptr<Texture> loadedTexture = _future.get();
 
 		g_ResourceThread.join();
 

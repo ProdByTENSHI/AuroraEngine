@@ -1,8 +1,8 @@
 #include "ecs/systems/SpriteSheetRenderer.h"
 
-#include "globals/EngineGlobals.hpp"
 #include "ecs/components/SpriteSheetComponent.h"
 #include "ecs/components/TransformComponent.h"
+#include "globals/EngineGlobals.hpp"
 #include "tenshiUtil/container/STLUtil.h"
 
 namespace Aurora {
@@ -155,7 +155,7 @@ namespace Aurora {
 					return -1;
 				}
 			});
-		g_Ecs->m_OnEntitySignatureChange.Subscribe(_onSignatureChange);
+		g_Ecs->OnEntitySignatureChange.Subscribe(_onSignatureChange);
 	}
 
 	void SpriteSheetRenderer::Render(Shader& shader) {
