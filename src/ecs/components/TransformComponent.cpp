@@ -17,4 +17,4 @@ namespace Aurora {
 	ComponentType TransformComponent::GetType() {
 		return ComponentType::TransformType;
 	}
-} // namespace tenshi
+} // namespace Aurora

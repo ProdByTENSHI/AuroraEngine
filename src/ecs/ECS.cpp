@@ -44,12 +44,6 @@ namespace Aurora
 
 	void Ecs::InitSystems()
 	{
-		Signature _sig;
-		_sig.set(ComponentType::TransformType);
-		_sig.set(ComponentType::StaticSpriteType);
-		m_StaticSpriteRenderer = std::make_unique<StaticSpriteRenderer>(_sig,
-			STATIC_SPRITE_RENDERER_ID);
-		_sig.reset();
 	}
 
 	u32 Ecs::GetNextEntityId()
@@ -80,4 +74,4 @@ namespace Aurora
 			DestroyEntity(i);
 		}
 	}
-} // namespace tenshi
+} // namespace Aurora

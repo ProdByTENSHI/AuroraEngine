@@ -7,7 +7,7 @@ namespace Aurora
 		InvalidType = 0,
 		TransformType = 1,
 		NameType = 2,
-		StaticSpriteType = 3,
-		CameraType = 4
+		SpriteType = 3,
+		SpriteSheetType = 4
 	};
 }

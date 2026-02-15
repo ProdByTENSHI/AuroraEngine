@@ -2,7 +2,6 @@
 #include "tenshiUtil/eventsystem/EventSystem.h"
 
 #include <SDL.h>
-#include <SDL_image.h>
 #include <thread>
 
 namespace Aurora {

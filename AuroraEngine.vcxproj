@@ -19,16 +19,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="include\tenshiUtil\memory\Ssbo.cpp" />
+    <ClCompile Include="include\tenshiUtil\memory\UniformBuffer.cpp" />
     <ClCompile Include="src\core\AuroraEngine.cpp" />
     <ClCompile Include="src\debug\Logger.cpp" />
     <ClCompile Include="src\ecs\components\EntityNameComponent.cpp" />
-    <ClCompile Include="src\ecs\components\StaticSpriteComponent.cpp" />
+    <ClCompile Include="src\ecs\components\SpriteComponent.cpp" />
+    <ClCompile Include="src\ecs\components\SpriteSheetComponent.cpp" />
     <ClCompile Include="src\ecs\components\TransformComponent.cpp" />
     <ClCompile Include="src\ecs\ECS.cpp" />
     <ClCompile Include="src\ecs\System.cpp" />
-    <ClCompile Include="src\ecs\systems\StaticSpriteRenderer.cpp" />
+    <ClCompile Include="src\ecs\systems\SpriteRenderer.cpp" />
+    <ClCompile Include="src\ecs\systems\SpriteSheetRenderer.cpp" />
     <ClCompile Include="src\input\InputSystem.cpp" />
-    <ClCompile Include="src\ecs\components\CameraComponent.cpp" />
+    <ClCompile Include="src\memory\Shader.cpp" />
+    <ClCompile Include="src\memory\SpriteSheet.cpp" />
+    <ClCompile Include="src\memory\Texture.cpp" />
     <ClCompile Include="src\rendering\MasterRenderer.cpp" />
     <ClCompile Include="src\memory\ResourceManager.cpp" />
     <ClCompile Include="src\window\Window.cpp" />
@@ -39,20 +45,31 @@
     <ClInclude Include="include\ecs\Component.h" />
     <ClInclude Include="include\ecs\ComponentArray.h" />
     <ClInclude Include="include\ecs\components\EntityNameComponent.h" />
-    <ClInclude Include="include\ecs\components\StaticSpriteComponent.h" />
+    <ClInclude Include="include\ecs\components\SpriteComponent.h" />
+    <ClInclude Include="include\ecs\components\SpriteSheetComponent.h" />
     <ClInclude Include="include\ecs\components\TransformComponent.h" />
     <ClInclude Include="include\ecs\ComponentTypes.h" />
     <ClInclude Include="include\ecs\ECS.h" />
     <ClInclude Include="include\ecs\ECS_Definitions.h" />
     <ClInclude Include="include\ecs\System.h" />
-    <ClInclude Include="include\ecs\systems\StaticSpriteRenderer.hpp" />
+    <ClInclude Include="include\ecs\systems\SpriteRenderer.h" />
+    <ClInclude Include="include\ecs\systems\SpriteSheetRenderer.h" />
     <ClInclude Include="include\globals\AuroraTypes.hpp" />
     <ClInclude Include="include\globals\EngineGlobals.hpp" />
     <ClInclude Include="include\input\InputState.hpp" />
     <ClInclude Include="include\input\InputSystem.hpp" />
-    <ClInclude Include="include\ecs\components\CameraComponent.h" />
+    <ClInclude Include="include\memory\Shader.h" />
+    <ClInclude Include="include\memory\SpriteSheet.h" />
+    <ClInclude Include="include\memory\Texture.h" />
+    <ClInclude Include="include\memory\Vertex.h" />
     <ClInclude Include="include\rendering\MasterRenderer.hpp" />
+    <ClInclude Include="include\rendering\SpriteBatch.h" />
+    <ClInclude Include="include\rendering\SpriteSheetBatch.h" />
+    <ClInclude Include="include\tenshiUtil\container\STLUtil.h" />
     <ClInclude Include="include\tenshiUtil\eventsystem\EventSystem.h" />
+    <ClInclude Include="include\tenshiUtil\math\Random.h" />
+    <ClInclude Include="include\tenshiUtil\memory\Ssbo.h" />
+    <ClInclude Include="include\tenshiUtil\memory\UniformBuffer.h" />
     <ClInclude Include="include\window\Window.hpp" />
     <ClInclude Include="include\memory\ResourceManager.hpp" />
   </ItemGroup>
@@ -146,7 +163,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)vendor/glm/;$(SolutionDir)AuroraEngine/include/;$(SolutionDir)vendor/SDL2 Image/include;$(SolutionDir)vendor/SDL2/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)vendor/stb;$(SolutionDir)vendor/glew-2.1.0/include;$(SolutionDir)vendor/glm/;$(SolutionDir)AuroraEngine/include/;$(SolutionDir)vendor/SDL2/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -154,8 +171,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor/SDL2 Image/lib;$(SolutionDir)vendor/SDL2/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)vendor/glew-2.1.0/lib;$(SolutionDir)vendor/SDL2/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

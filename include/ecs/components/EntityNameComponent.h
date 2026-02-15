@@ -14,4 +14,4 @@ namespace Aurora {
 	public:
 		std::string m_Name = "Unnamed Entity";
 	};
-} // namespace tenshi
+} // namespace Aurora

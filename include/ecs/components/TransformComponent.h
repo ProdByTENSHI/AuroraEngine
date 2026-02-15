@@ -69,4 +69,4 @@ namespace Aurora
 
 		const ComponentType m_Type = ComponentType::TransformType;
 	};
-} // namespace tenshi
+} // namespace Aurora

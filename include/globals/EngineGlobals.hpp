@@ -22,9 +22,8 @@ namespace Aurora {
 	inline Window* g_Window = nullptr;
 
 	// -- RENDERING
-	inline SDL_Renderer* g_Renderer = nullptr;
-	inline u8 g_RendererFlags = SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED;
 	inline std::unique_ptr<MasterRenderer> g_MasterRenderer;
+	inline SDL_GLContext g_GLContext;
 
 	// -- ECS
 	inline std::unique_ptr<Ecs> g_Ecs;
@@ -34,5 +33,5 @@ namespace Aurora {
 	inline std::thread g_ResourceThread;
 
 	// -- INPUT
-	inline std::unique_ptr<InputSystem> g_InputSystem;
+	inline std::unique_ptr<InputSystem> g_InputManager;
 }

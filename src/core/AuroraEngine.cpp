@@ -2,39 +2,48 @@
 
 #include "globals/EngineGlobals.hpp"
 
+#include <GL/glew.h>
+
 namespace Aurora {
 	AuroraEngine::AuroraEngine() {
 		// Initialize SDL
 		if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 			Logger::Instance().Log("Could not initialize SDL2", LogType::Error);
 
-		if (IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG) < 0)
-			Logger::Instance().Log("Could not initialize SDL Image", LogType::Error);
-
-		SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
+			SDL_GL_CONTEXT_PROFILE_CORE);
+		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, SDL_TRUE);
 
 		g_Window = new Window(g_WindowTitle, g_WindowWidth,
 			g_WindowHeight, g_WindowFlags);
-		g_Renderer = SDL_CreateRenderer(g_Window->m_Window,
-			-1, g_RendererFlags);
+
+		g_GLContext = SDL_GL_CreateContext(g_Window->m_Window);
+
+		SDL_GL_SetSwapInterval(1); // Enable VSync
+
+		// Initialize OpenGL Glew
+		glewInit();
+
+		glViewport(0, 0, g_WindowWidth, g_WindowHeight);
 
 		g_MasterRenderer = std::make_unique<MasterRenderer>();
 		g_Ecs = std::make_unique<Ecs>();
 		g_Ecs->Init();
 		g_ResourceManager = std::make_unique<ResourceManager>();
-		g_InputSystem = std::make_unique<InputSystem>();
+		g_InputManager = std::make_unique<InputSystem>();
 
 		m_IsRunning = true;
 	}
 
 	AuroraEngine::~AuroraEngine() {
-		SDL_DestroyRenderer(g_Renderer);
 		delete g_Window;
 	}
 
 	void AuroraEngine::Update() {
 		while (m_IsRunning) {
-			g_InputSystem->SwapBuffers();
+			g_InputManager->SwapBuffers();
 
 			// Process Event Queue before Updating
 			// This must be done in the Main Thread
@@ -54,6 +63,7 @@ namespace Aurora {
 
 						SDL_GetWindowSize(g_Window->m_Window, &_w, &_h);
 						SDL_UpdateWindowSurface(g_Window->m_Window);
+						glViewport(0, 0, _w, _h);
 
 						g_Window->OnResize.Dispatch(_w, _h);
 
@@ -63,7 +73,7 @@ namespace Aurora {
 				}
 
 				// -- OTHER --
-				g_InputSystem->Process(e);
+				g_InputManager->Process(e);
 			}
 
 			OnUpdate.Dispatch();
@@ -73,11 +83,12 @@ namespace Aurora {
 	}
 
 	void AuroraEngine::Render() {
-		SDL_RenderClear(Aurora::g_Renderer);
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
 
 		OnRender.Dispatch();
 		g_MasterRenderer->Render();
 
-		SDL_RenderPresent(g_Renderer);
+		SDL_GL_SwapWindow(g_Window->m_Window);
 	}
 }

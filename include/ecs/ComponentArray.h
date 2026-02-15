@@ -47,4 +47,4 @@ namespace Aurora {
 			return dynamic_cast<T*>(m_EntityToComponent[entity]);
 		}
 	};
-} // namespace tenshi
+} // namespace Aurora

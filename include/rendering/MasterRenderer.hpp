@@ -14,11 +14,6 @@ namespace Aurora {
 
 	struct RenderCommand {
 	public:
-		SDL_Rect m_SrcRect = { 0, 0, 0, 0 };
-		SDL_Rect m_DstRect = { 0, 0, 100, 100 };
-		SDL_Texture* m_Texture = nullptr;
-		f64 m_Angle = 0;
-		SDL_RendererFlip m_Flip;
 		u8 m_Layer = 0;
 	};
 

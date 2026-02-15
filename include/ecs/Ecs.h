@@ -16,7 +16,8 @@
 #include "globals/AuroraTypes.hpp"
 #include "tenshiUtil/eventsystem/EventSystem.h"
 
-#include "ecs/systems/StaticSpriteRenderer.hpp"
+#include "ecs/systems/SpriteRenderer.h"
+#include "ecs/systems/SpriteSheetRenderer.h"
 
 namespace Aurora
 {
@@ -118,8 +119,6 @@ namespace Aurora
 		// -- SYSTEMS
 		Event<Entity, Signature> OnEntitySignatureChange;
 
-		std::unique_ptr<StaticSpriteRenderer> m_StaticSpriteRenderer;
-
 	private:
 		// Holds Component Arrays by their typename
 		std::map<const char*, BaseComponentArray*> m_ComponentArrays;
@@ -134,4 +133,4 @@ namespace Aurora
 
 		Entity GetNextEntityId();
 	};
-} // namespace tenshi
+} // namespace Aurora

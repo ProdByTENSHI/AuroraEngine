@@ -11,4 +11,4 @@ namespace Aurora {
 		// Returns the Component Type
 		virtual ComponentType GetType() = 0;
 	};
-} // namespace tenshi
+} // namespace Aurora
