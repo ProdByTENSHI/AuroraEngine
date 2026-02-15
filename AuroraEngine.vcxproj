@@ -63,7 +63,6 @@
     <ClInclude Include="include\memory\Texture.h" />
     <ClInclude Include="include\memory\Vertex.h" />
     <ClInclude Include="include\rendering\MasterRenderer.hpp" />
-    <ClInclude Include="include\rendering\SpriteBatch.h" />
     <ClInclude Include="include\rendering\SpriteSheetBatch.h" />
     <ClInclude Include="include\tenshiUtil\container\STLUtil.h" />
     <ClInclude Include="include\tenshiUtil\eventsystem\EventSystem.h" />

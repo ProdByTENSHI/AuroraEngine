@@ -99,10 +99,10 @@ namespace Aurora {
 
 		glViewport(0, 0, g_WindowWidth, g_WindowHeight);
 
+		g_ResourceManager = std::make_unique<ResourceManager>();
 		g_MasterRenderer = std::make_unique<MasterRenderer>();
 		g_Ecs = std::make_unique<Ecs>();
 		g_Ecs->Init();
-		g_ResourceManager = std::make_unique<ResourceManager>();
 		g_InputManager = std::make_unique<InputSystem>();
 
 		m_IsRunning = true;

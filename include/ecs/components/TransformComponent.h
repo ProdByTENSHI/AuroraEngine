@@ -27,11 +27,11 @@ namespace Aurora
 			onTransformChange.Dispatch(m_ModelMatrix, m_Position, m_Rotation, m_Scale);
 		}
 
-		void Rotate(const glm::vec2& axis, f32 degrees)
+		void Rotate(const glm::vec2& axis, f32 rad)
 		{
-			m_Rotation += axis * degrees;
+			m_Rotation += axis * rad;
 			m_ModelMatrix =
-				glm::rotate(m_ModelMatrix, degrees, glm::vec3(axis.x, axis.y, 0.0f));
+				glm::rotate(m_ModelMatrix, rad, glm::vec3(axis.x, axis.y, 0.0f));
 
 			onTransformChange.Dispatch(m_ModelMatrix, m_Position, m_Rotation, m_Scale);
 		}

@@ -4,7 +4,6 @@
 
 #include "ecs/System.h"
 #include "memory/Shader.h"
-#include "rendering/SpriteBatch.h"
 
 #include "memory/Vertex.h"
 
@@ -19,6 +18,5 @@ namespace Aurora
 		void Render(Shader& shader);
 
 	private:
-		std::vector<SpriteBatch*> m_Batches;
 	};
 }

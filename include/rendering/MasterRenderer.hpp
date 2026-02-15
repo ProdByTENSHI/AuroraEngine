@@ -3,7 +3,9 @@
 #include <memory>
 #include <vector>
 
+#include "ecs/ECS_Definitions.h"
 #include "globals/AuroraTypes.hpp"
+#include "memory/Shader.h"
 #include "memory/Texture.h"
 #include "tenshiUtil/memory/Ssbo.h"
 #include "tenshiUtil/memory/UniformBuffer.h"
@@ -11,10 +13,14 @@
 namespace Aurora {
 	constexpr u8 MAX_LAYERS = 32;
 
+	// Sort Priority Order
 	constexpr u64 LAYER_SHIFT = 56;
 	constexpr u64 DEPTH_SHIFT = 40;
 	constexpr u64 SHADER_SHIFT = 24;
 	constexpr u64 TEXTURE_SHIFT = 0;
+
+	constexpr u32 SPRITE_TRANSFORMS_SSBO_BIDING_POINT = 0;
+	constexpr u32 ENTITY_IDS_UBO_BINDING_POINT = 0;
 
 	constexpr uint64_t BuildSortKey(
 		u8  layer,
@@ -73,8 +79,25 @@ namespace Aurora {
 		}
 	};
 
+	// A Batch is a group of Entities to Render with the same
+	// Layer, Depth, Shader and Texture
+	struct RenderBatch {
+		// Important Data for the Batch can be retrieved from Key
+		u64 m_SortKey = 0;
+
+		std::vector<RenderCommand> m_Commands;
+
+		u32 m_ShaderId = 0;
+		u32 m_TextureId = 0;
+
+		GLuint m_Vao = 0;
+		GLuint m_Vbo = 0;
+	};
+
 	class MasterRenderer {
 	public:
+		MasterRenderer();
+
 		void Render();
 
 		void PushRenderCommand(RenderCommand command);
@@ -87,11 +110,14 @@ namespace Aurora {
 		Ssbo m_TransformsSsbo;
 		UniformBuffer m_EntityIdsUbo;
 
-	private:
 		std::shared_ptr<Shader> m_SpriteShader = nullptr;
+
+	private:
 
 		// Systems can push their Render Command to this Buffer
 		// The Commands will be sorted and batched before rendering
 		std::vector<RenderCommand> m_RenderCmdBuffer;
+
+		std::vector<RenderBatch> m_Batches;
 	};
 }

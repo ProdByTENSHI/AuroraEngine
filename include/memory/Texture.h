@@ -40,8 +40,11 @@ namespace Aurora
 
 		std::string m_Name;
 
+	public:
+		u8 m_Layer = 0;
+
 	private:
-		inline static u16 s_TextureCount = 0;
+		inline static u16 s_TextureCount = 1;
 
 		GLuint m_Texture = 0;
 		i32 m_Width = 0;

@@ -33,16 +33,10 @@
     <ClCompile Include="src\ecs\components\EntityNameComponent.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="src\ecs\components\StaticSpriteComponent.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="src\memory\ResourceManager.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="src\rendering\MasterRenderer.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ecs\systems\StaticSpriteRenderer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="src\ecs\components\TransformComponent.cpp">
@@ -122,16 +116,10 @@
     <ClInclude Include="include\ecs\System.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="include\ecs\components\StaticSpriteComponent.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="include\memory\ResourceManager.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="include\rendering\MasterRenderer.hpp">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ecs\systems\StaticSpriteRenderer.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="include\input\InputSystem.hpp">
@@ -162,9 +150,6 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="include\memory\Vertex.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="include\rendering\SpriteBatch.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="include\rendering\SpriteSheetBatch.h">

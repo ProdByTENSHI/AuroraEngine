@@ -34,4 +34,8 @@ namespace Aurora {
 
 	// -- INPUT
 	inline std::unique_ptr<InputSystem> g_InputManager;
+
+	// -- GLOBALS
+	inline const u32 MAX_SPRITES = 500000;
+	inline const u32 MAX_SPRITES_PER_BATCH = 1000;
 }
