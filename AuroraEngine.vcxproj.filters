@@ -51,6 +51,9 @@
     <ClCompile Include="src\input\InputSystem.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="src\ecs\components\CameraComponent.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\core\AuroraEngine.hpp">
@@ -111,6 +114,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="include\input\InputState.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ecs\components\CameraComponent.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

@@ -28,6 +28,7 @@
     <ClCompile Include="src\ecs\System.cpp" />
     <ClCompile Include="src\ecs\systems\StaticSpriteRenderer.cpp" />
     <ClCompile Include="src\input\InputSystem.cpp" />
+    <ClCompile Include="src\ecs\components\CameraComponent.cpp" />
     <ClCompile Include="src\rendering\MasterRenderer.cpp" />
     <ClCompile Include="src\memory\ResourceManager.cpp" />
     <ClCompile Include="src\window\Window.cpp" />
@@ -49,6 +50,7 @@
     <ClInclude Include="include\globals\EngineGlobals.hpp" />
     <ClInclude Include="include\input\InputState.hpp" />
     <ClInclude Include="include\input\InputSystem.hpp" />
+    <ClInclude Include="include\ecs\components\CameraComponent.h" />
     <ClInclude Include="include\rendering\MasterRenderer.hpp" />
     <ClInclude Include="include\tenshiUtil\eventsystem\EventSystem.h" />
     <ClInclude Include="include\window\Window.hpp" />
