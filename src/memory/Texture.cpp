@@ -1,7 +1,7 @@
 #include "memory/Texture.h"
 
-#include <stb_image.h>
 #include <iostream>
+#include <stb_image.h>
 
 namespace Aurora
 {

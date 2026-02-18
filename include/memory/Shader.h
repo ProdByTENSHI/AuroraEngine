@@ -36,6 +36,16 @@ namespace Aurora
 
 		inline GLuint GetProgram() { return m_Program; }
 
+		bool operator==(const Shader& other) const noexcept
+		{
+			return m_Id == other.m_Id;
+		}
+
+		bool operator!=(const Shader& other) const noexcept
+		{
+			return m_Id != other.m_Id;
+		}
+
 	public:
 		static u32 s_IdCount;
 

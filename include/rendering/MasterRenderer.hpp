@@ -7,6 +7,7 @@
 #include "globals/AuroraTypes.hpp"
 #include "memory/Shader.h"
 #include "memory/Texture.h"
+#include "memory/Vertex.h"
 #include "tenshiUtil/memory/Ssbo.h"
 #include "tenshiUtil/memory/UniformBuffer.h"
 
@@ -19,8 +20,25 @@ namespace Aurora {
 	constexpr u64 SHADER_SHIFT = 24;
 	constexpr u64 TEXTURE_SHIFT = 0;
 
-	constexpr u32 SPRITE_TRANSFORMS_SSBO_BIDING_POINT = 0;
 	constexpr u32 ENTITY_IDS_UBO_BINDING_POINT = 0;
+
+	// VAO Data Layout
+	const u32 VAO_POS_INDEX = 0;
+	const u32 VAO_TEX_INDEX = 1;
+	const u32 VAO_COLOR_INDEX = 2;
+
+	inline static const Vertex QUAD_VERTICES[6] =
+	{
+		// First triangle
+		Vertex(-0.5f, -0.5f, 0.0f, 0.0f),
+		Vertex(0.5f, -0.5f, 1.0f, 0.0f),
+		Vertex(0.5f,  0.5f, 1.0f, 1.0f),
+
+		// Second triangle
+		Vertex(0.5f,  0.5f, 1.0f, 1.0f),
+		Vertex(-0.5f,  0.5f, 0.0f, 1.0f),
+		Vertex(-0.5f, -0.5f, 0.0f, 0.0f)
+	};
 
 	constexpr uint64_t BuildSortKey(
 		u8  layer,
@@ -52,9 +70,14 @@ namespace Aurora {
 		// Sort Key - We Sort the Render Commands at Flushing Stage by this Key
 		u64 m_SortKey = 0;
 
-		// Internal Resource IDs and not the OpenGL Handlers!!
-		u32 m_TextureId;
-		u32 m_ShaderId;
+		std::shared_ptr<Texture> m_Texture;
+		std::shared_ptr<Shader> m_Shader;
+
+		// MSB R: << 24
+		//     G  << 16
+		//     B  << 8
+		// LSB A
+		u32 m_Color = 0;
 
 		f32 m_PosX = 0.0f;
 		f32 m_PosY = 0.0f;
@@ -88,7 +111,7 @@ namespace Aurora {
 		std::vector<RenderCommand> m_Commands;
 
 		u32 m_ShaderId = 0;
-		u32 m_TextureId = 0;
+		u32 m_Texture = 0;
 
 		GLuint m_Vao = 0;
 		GLuint m_Vbo = 0;
@@ -107,17 +130,19 @@ namespace Aurora {
 		void SortRenderCommandBuffer();
 
 	public:
-		Ssbo m_TransformsSsbo;
 		UniformBuffer m_EntityIdsUbo;
 
 		std::shared_ptr<Shader> m_SpriteShader = nullptr;
 
 	private:
-
 		// Systems can push their Render Command to this Buffer
 		// The Commands will be sorted and batched before rendering
 		std::vector<RenderCommand> m_RenderCmdBuffer;
 
 		std::vector<RenderBatch> m_Batches;
+
+		// -- Vertex Data for Sprites and Spritesheets
+		GLuint m_SpriteVao = 0;
+		GLuint m_SpriteVbo = 0;
 	};
 }

@@ -106,6 +106,7 @@ namespace Aurora
 		{
 			std::getline(stream, line);
 			content.append(line + "\n");
+			std::cout << line << "\n";
 		}
 
 		stream.close();

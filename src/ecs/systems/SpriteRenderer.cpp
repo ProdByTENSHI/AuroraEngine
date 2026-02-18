@@ -19,14 +19,18 @@ namespace Aurora {
 					*g_Ecs->GetComponent<SpriteComponent>(entity);
 
 				RenderCommand _cmd;
-				_cmd.m_TextureId = _sprite.m_Texture->m_Id;
-				_cmd.m_ShaderId = g_MasterRenderer->m_SpriteShader->m_Id;
+				_cmd.m_Texture = _sprite.m_Texture;
+				_cmd.m_Shader = g_MasterRenderer->m_SpriteShader;
 				_cmd.m_PosX = _transform.m_Position.x;
 				_cmd.m_PosY = _transform.m_Position.y;
 				_cmd.m_Width = _transform.m_Scale.x;
 				_cmd.m_Height = _transform.m_Scale.y;
 				_cmd.m_Rotation = _transform.m_Rotation.x;
 				_cmd.m_Layer = _sprite.m_Texture->m_Layer;
+				_cmd.m_Color = ((u32)0xFF << 0,
+					(u32)0xFF << 8,
+					(u32)0xFF << 16,
+					(u32)0xFF << 24);
 
 				g_MasterRenderer->PushRenderCommand(_cmd);
 			});

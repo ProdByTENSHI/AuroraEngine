@@ -18,6 +18,10 @@ namespace Aurora
 
 		const u16 m_Id = 0;
 
+		inline GLuint GetTetureHandle() const {
+			return m_Texture;
+		}
+
 		inline i32 GetWidth() const
 		{
 			return m_Width;
@@ -36,6 +40,16 @@ namespace Aurora
 		bool GetCreationStatus() const
 		{
 			return m_CreationStatus;
+		}
+
+		bool operator==(const Texture& other) const noexcept
+		{
+			return m_Id == other.m_Id;
+		}
+
+		bool operator!=(const Texture& other) const noexcept
+		{
+			return m_Id != other.m_Id;
 		}
 
 		std::string m_Name;

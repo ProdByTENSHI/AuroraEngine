@@ -88,6 +88,7 @@ namespace Aurora {
 		SDL_GL_SetSwapInterval(1); // Enable VSync
 
 		// Initialize OpenGL Glew
+		glewExperimental = GL_TRUE;
 		GLenum _glInit = glewInit();
 		if (_glInit != GLEW_OK) {
 			std::cerr << "Could not initialize Glew. Error: " << glewGetErrorString(_glInit) << std::endl;
