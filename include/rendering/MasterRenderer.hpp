@@ -20,7 +20,7 @@ namespace Aurora {
 	constexpr u64 SHADER_SHIFT = 24;
 	constexpr u64 TEXTURE_SHIFT = 0;
 
-	constexpr u32 ENTITY_IDS_UBO_BINDING_POINT = 0;
+	constexpr u32 ENTITY_IDS_SSBO_BINDING_POINT = 0;
 
 	// VAO Data Layout
 	const u32 VAO_POS_INDEX = 0;
@@ -130,7 +130,7 @@ namespace Aurora {
 		void SortRenderCommandBuffer();
 
 	public:
-		UniformBuffer m_EntityIdsUbo;
+		Ssbo m_EntityIdsSsbo;
 
 		std::shared_ptr<Shader> m_SpriteShader = nullptr;
 

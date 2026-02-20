@@ -1,5 +1,7 @@
 #include "Ssbo.h"
 
+#include "debug/Logger.hpp"
+
 namespace Aurora
 {
 	Ssbo::~Ssbo()
@@ -17,13 +19,15 @@ namespace Aurora
 
 	GLuint Ssbo::GetBufferBindingPoint(Aurora::Shader& shader)
 	{
-		return glGetProgramResourceIndex(shader.GetProgram(), GL_SHADER_STORAGE_BLOCK,
-			m_Name.c_str());
+		return shader.GetSsboIndex(m_Name);
 	}
 
 	void Ssbo::BindToShader(Aurora::Shader& shader, u8 index)
 	{
 		GLuint _bindingPoint = GetBufferBindingPoint(shader);
+		if (_bindingPoint == GL_INVALID_INDEX)
+			return;
+
 		glShaderStorageBlockBinding(shader.GetProgram(), _bindingPoint, index);
 		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, index, m_Buffer);
 	}

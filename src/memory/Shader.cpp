@@ -50,16 +50,16 @@ namespace Aurora
 			else if (type == GL_FRAGMENT_SHADER)
 				typeStr = "Fragment Shader";
 
-			// Get Log Length in Bytes
-			GLint logSize = 0;
-			glGetShaderiv(id, GL_INFO_LOG_LENGTH, &logSize);
+			GLint logLength = 0;
+			glGetShaderiv(id, GL_INFO_LOG_LENGTH, &logLength);
 
-			// Get Log Message
-			GLchar errorMessage[1024];
-			glGetShaderInfoLog(id, logSize, &logSize, errorMessage);
+			if (logLength > 0)
+			{
+				std::vector<GLchar> log(logLength);
+				glGetShaderInfoLog(id, logLength, nullptr, log.data());
 
-			//Logger::getInstance()->write(typeStr + " : " + errorMessage);
-			std::cout << "Shader Error: " << errorMessage << std::endl;
+				std::cout << "Shader Error:\n" << log.data() << std::endl;
+			}
 
 			glDeleteShader(id);
 			return INVALID_SHADER;
@@ -106,7 +106,6 @@ namespace Aurora
 		{
 			std::getline(stream, line);
 			content.append(line + "\n");
-			std::cout << line << "\n";
 		}
 
 		stream.close();

@@ -7,8 +7,8 @@ namespace Aurora {
 		m_SpriteShader = g_ResourceManager->LoadShader("sprite");
 		m_SpriteShader->Bind();
 
-		m_EntityIdsUbo.Create(sizeof(i32) * MAX_SPRITES_PER_BATCH, "EntityIds");
-		m_EntityIdsUbo.BindToShader(*m_SpriteShader.get(), ENTITY_IDS_UBO_BINDING_POINT);
+		m_EntityIdsSsbo.Create(sizeof(i32) * MAX_SPRITES_PER_BATCH, "EntityIds");
+		m_EntityIdsSsbo.BindToShader(*m_SpriteShader.get(), ENTITY_IDS_SSBO_BINDING_POINT);
 
 		// -- Sprite Vertex Data
 		glCreateVertexArrays(1, &m_SpriteVao);
