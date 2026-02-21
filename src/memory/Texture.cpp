@@ -7,7 +7,7 @@ namespace Aurora
 {
 	Texture::Texture(const std::string& name) : m_Id(s_TextureCount), m_Name(name)
 	{
-		stbi_set_flip_vertically_on_load(0);
+		stbi_set_flip_vertically_on_load(1);
 		stbi_uc* _buffer = stbi_load(name.c_str(), &m_Width, &m_Height, &m_Channels, 4);
 		if (!_buffer)
 			return;
