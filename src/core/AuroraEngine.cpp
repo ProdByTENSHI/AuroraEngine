@@ -84,6 +84,19 @@ namespace Aurora {
 			g_WindowHeight, g_WindowFlags);
 
 		g_GLContext = SDL_GL_CreateContext(g_Window->m_Window);
+		if (g_GLContext == NULL) {
+			Logger::Instance().Log("No GL Context " + std::to_string(glGetError()),
+				LogType::Error);
+		}
+
+		u32 _currStatus = SDL_GL_MakeCurrent(g_Window->m_Window, g_GLContext);
+		if (_currStatus < 0) {
+			Logger::Instance().Log("Context not Current " + std::to_string(glGetError()),
+				LogType::Error);
+		}
+
+		printf("GL Version: %s\n", glGetString(GL_VERSION));
+		printf("GLSL Version: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 		SDL_GL_SetSwapInterval(1); // Enable VSync
 

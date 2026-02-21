@@ -10,39 +10,23 @@
 namespace Aurora {
 	std::shared_ptr<Shader> ResourceManager::LoadShader(const std::string& path)
 	{
-		auto _loadFunc = [this, path]() -> std::shared_ptr<Shader> {
-			if (m_ShaderCache.find(path) != m_ShaderCache.end())
-				return m_ShaderCache[path];
+		// TODO Make Multithreaded without breaking OpenGL
+		if (m_ShaderCache.find(path) != m_ShaderCache.end())
+			return m_ShaderCache[path];
 
-			std::string _loc = SHADER_LOCATION;
-			_loc += OS_SEP;
-			_loc.append(path);
-			std::shared_ptr<Shader> _shader = std::make_shared<Shader>
-				(_loc + ".vert", _loc + ".frag");
-			if (_shader == nullptr)
-			{
-				std::cerr << "Could not load Shader " << _loc << std::endl;
-				return nullptr;
-			}
+		std::string _loc = SHADER_LOCATION;
+		_loc += OS_SEP;
+		_loc.append(path);
+		std::shared_ptr<Shader> _shader = std::make_shared<Shader>
+			(_loc + ".vert", _loc + ".frag");
+		if (_shader == nullptr)
+		{
+			std::cerr << "Could not load Shader " << _loc << std::endl;
+			return nullptr;
+		}
 
-			m_ShaderCache.insert(std::make_pair(path, _shader));
-			return _shader;
-			};
-
-		std::promise<std::shared_ptr<Shader>> _promise;
-		std::future<std::shared_ptr<Shader>> _future = _promise.get_future();
-
-		g_ResourceThread = std::thread([promise = std::move(_promise),
-			_loadFunc]() mutable
-			{
-				std::shared_ptr<Shader> shader = _loadFunc();
-				promise.set_value(shader);
-			});
-		std::shared_ptr<Shader> loadedShader = _future.get();
-
-		g_ResourceThread.join();
-
-		return loadedShader;
+		m_ShaderCache.insert(std::make_pair(path, _shader));
+		return _shader;
 	}
 
 	std::shared_ptr<Texture> ResourceManager::LoadTexture(const std::string& path)

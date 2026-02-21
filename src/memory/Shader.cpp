@@ -5,6 +5,8 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
+#include "debug/Logger.hpp"
+
 namespace Aurora
 {
 	u32 Shader::s_IdCount = 0;
@@ -77,6 +79,14 @@ namespace Aurora
 		glAttachShader(m_Program, m_VertexShader);
 		glAttachShader(m_Program, m_FragmentShader);
 		glLinkProgram(m_Program);
+
+		GLint program_linked;
+		glGetProgramiv(m_Program, GL_LINK_STATUS, &program_linked);
+		if (program_linked != GL_TRUE)
+		{
+			std::cout << "Scheiße\n";
+		}
+
 		glValidateProgram(m_Program);
 	}
 
