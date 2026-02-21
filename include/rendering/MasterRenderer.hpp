@@ -74,6 +74,8 @@ namespace Aurora {
 		// Sort Key - We Sort the Render Commands at Flushing Stage by this Key
 		u64 m_SortKey = 0;
 
+		Entity m_Entity;
+
 		u32 m_Texture;
 		u32 m_Shader;
 
@@ -82,6 +84,8 @@ namespace Aurora {
 		//     B  << 8
 		// LSB A
 		u32 m_Color = 0;
+
+		glm::mat4 m_Transform;
 
 		u8  m_Transparency = 0xFF;
 		i8  m_Depth = 0;
@@ -123,6 +127,9 @@ namespace Aurora {
 	private:
 		// Sorts the Render Command Buffer by Layer and Texture
 		void SortRenderCommandBuffer();
+
+		// Batch and Upload large Shader Buffer Data to reduce Sub Buffer Calls
+		void StageBufferData();
 
 	public:
 		Ssbo m_EntityIdsSsbo;

@@ -15,6 +15,7 @@ namespace Aurora {
 
 		// -- Sprite Vertex Data
 		glCreateVertexArrays(1, &m_SpriteVao);
+		glBindVertexArray(m_SpriteVao);
 		glCreateBuffers(1, &m_SpriteVbo);
 
 		glNamedBufferStorage(m_SpriteVbo, 6 * sizeof(Vertex),
@@ -32,41 +33,24 @@ namespace Aurora {
 
 	void MasterRenderer::Render() {
 		SortRenderCommandBuffer();
-
-		// Batch together Sprites that use the same Shader and Texture
-		RenderBatch _currentBatch = { 0 };
-		u32 _lastTexture = 0;
-		u32 _lastShader = 0;
-
-		for (auto cmd : m_RenderCmdBuffer) {
-			if (cmd.m_Texture != _lastTexture
-				|| cmd.m_Shader != _lastShader) {
-				// New batch (bind the previous one and start a new one)
-				if (!_currentBatch.m_Commands.empty()) {
-					m_Batches.push_back(_currentBatch);
-
-					// "Reset" m_Commands Array
-					_currentBatch.m_CmdCount = 0;
-				}
-				_lastTexture = cmd.m_Texture;
-				_lastShader = cmd.m_Shader;
-			}
-			_currentBatch.m_Commands[_currentBatch.m_CmdCount++] = cmd;
-		}
-		if (!_currentBatch.m_Commands.empty()) {
-			m_Batches.push_back(_currentBatch); // Push the last batch
-		}
+		StageBufferData();
 
 		// Render
-		u32 _baseOffset = 0;
-		for (auto& batch : m_Batches) {
-			glBindVertexArray(m_SpriteVao);
-			g_ResourceManager->LoadTexture(batch.m_Texture)->Bind();
-			glDrawArraysInstancedBaseInstance(GL_TRIANGLES, 0, 6,
-				batch.m_Commands.size(), _baseOffset);
-			_baseOffset += batch.m_Commands.size();
-			g_ResourceManager->LoadTexture(batch.m_Texture)->Unbind();
-			glBindVertexArray(0);
+		u32 batchStart = 0;
+		for (u32 i = 1; i <= m_RenderCmdBuffer.size(); ++i) {
+			// If texture changes OR we reached the end
+			if (i == m_RenderCmdBuffer.size() ||
+				m_RenderCmdBuffer[i].m_Texture != m_RenderCmdBuffer[batchStart].m_Texture) {
+				u32 count = i - batchStart;
+
+				auto tex = g_ResourceManager->LoadTexture(m_RenderCmdBuffer[batchStart].m_Texture);
+				tex->Bind(0);
+
+				// Use batchStart as the baseInstance
+				glDrawArraysInstancedBaseInstance(GL_TRIANGLES, 0, 6, count, batchStart);
+
+				batchStart = i;
+			}
 		}
 	}
 
@@ -81,5 +65,23 @@ namespace Aurora {
 
 	void MasterRenderer::SortRenderCommandBuffer() {
 		std::sort(m_RenderCmdBuffer.begin(), m_RenderCmdBuffer.end());
+	}
+
+	void MasterRenderer::StageBufferData() {
+		std::vector<glm::mat4> stagedMatrices;
+		std::vector<u32> stagedEntityIds;
+
+		stagedMatrices.reserve(m_RenderCmdBuffer.size());
+		stagedEntityIds.reserve(m_RenderCmdBuffer.size());
+
+		// Pack data into contiguous arrays based on the SORTED order
+		for (const auto& cmd : m_RenderCmdBuffer) {
+			stagedMatrices.push_back(cmd.m_Transform);
+			stagedEntityIds.push_back(cmd.m_Entity);
+		}
+
+		// Single upload for both
+		m_TransformMatrices.SubBufferData(0, stagedMatrices.size() * sizeof(glm::mat4), stagedMatrices.data());
+		m_EntityIdsSsbo.SubBufferData(0, stagedEntityIds.size() * sizeof(u32), stagedEntityIds.data());
 	}
 }
