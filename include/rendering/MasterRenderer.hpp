@@ -11,7 +11,6 @@
 #include "memory/Vertex.h"
 #include "tenshiUtil/memory/Ssbo.h"
 #include "tenshiUtil/memory/UniformBuffer.h"
-#include "tenshiUtil/memory/UniformBuffer.h"
 
 namespace Aurora {
 	constexpr u8 MAX_LAYERS = 32;
@@ -23,7 +22,9 @@ namespace Aurora {
 	constexpr u64 TEXTURE_SHIFT = 0;
 
 	constexpr u32 ENTITY_IDS_SSBO_BINDING_POINT = 0;
-	constexpr u32 TRANSFORM_MATRICES_UBO_BINDING_POINT = 0;
+	constexpr u32 TRANSFORM_MATRICES_SSBO_BINDING_POINT = 1;
+
+	constexpr size_t MAX_CMD_PER_BATCH = 5000;
 
 	// VAO Data Layout
 	const u32 VAO_POS_INDEX = 0;
@@ -82,8 +83,6 @@ namespace Aurora {
 		// LSB A
 		u32 m_Color = 0;
 
-		glm::mat4 m_TransformationMatrix;
-
 		u8  m_Transparency = 0xFF;
 		i8  m_Depth = 0;
 		u8  m_Layer = (u8)RenderLayers::Default;
@@ -95,9 +94,6 @@ namespace Aurora {
 			return m_SortKey < other.m_SortKey;
 		}
 	};
-
-	static const u32 MAX_CMD_PER_BATCH
-		= GL_MAX_UNIFORM_BLOCK_SIZE / sizeof(RenderCommand);
 
 	// A Batch is a group of Entities to Render with the same
 	// Layer, Depth, Shader and Texture
@@ -130,7 +126,7 @@ namespace Aurora {
 
 	public:
 		Ssbo m_EntityIdsSsbo;
-		UniformBuffer m_TransformMatrices;
+		Ssbo m_TransformMatrices;
 
 		Shader* m_SpriteShader = nullptr;
 

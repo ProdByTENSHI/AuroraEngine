@@ -58,7 +58,7 @@ namespace Aurora
 		u8 m_Layer = 0;
 
 	private:
-		inline static u16 s_TextureCount = 1;
+		inline static u16 s_TextureCount = 0;
 
 		GLuint m_Texture = 0;
 		i32 m_Width = 0;

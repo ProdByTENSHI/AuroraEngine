@@ -53,7 +53,7 @@ namespace Aurora {
 		_texture->m_Name = path;
 		m_TextureCache[path] = _texture;
 
-		m_TextureTable.insert(m_TextureTable.begin() + _id, _texture.get());
+		m_TextureTable.push_back(_texture.get());
 
 		Logger::Instance().Log("Loaded Texture from Disk "
 			+ path, LogType::Message);
@@ -62,7 +62,7 @@ namespace Aurora {
 	}
 
 	Texture* ResourceManager::LoadTexture(u32 internalId) {
-		assert(internalId > m_TextureTable.size());
+		assert(internalId < m_TextureTable.size());
 
 		return m_TextureTable[internalId];
 	}

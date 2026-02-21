@@ -4,16 +4,14 @@
 
 namespace Aurora {
 	MasterRenderer::MasterRenderer() {
-		Logger::Instance().Log("Max Commands per Draw Batch "
-			+ std::to_string(MAX_CMD_PER_BATCH));
 		m_SpriteShader = g_ResourceManager->LoadShader("sprite");
 		m_SpriteShader->Bind();
 
-		m_EntityIdsSsbo.Create(sizeof(i32) * MAX_SPRITES_PER_BATCH, "EntityIds");
+		m_EntityIdsSsbo.Create(sizeof(Entity) * MAX_CMD_PER_BATCH, "EntityIds");
 		m_EntityIdsSsbo.BindToShader(*m_SpriteShader, ENTITY_IDS_SSBO_BINDING_POINT);
 
-		m_TransformMatrices.Create(MAX_CMD_PER_BATCH, "TransformMatrices");
-		m_TransformMatrices.BindToShader(*m_SpriteShader, TRANSFORM_MATRICES_UBO_BINDING_POINT);
+		m_TransformMatrices.Create(sizeof(glm::mat4) * MAX_CMD_PER_BATCH, "TransformMatrices");
+		m_TransformMatrices.BindToShader(*m_SpriteShader, TRANSFORM_MATRICES_SSBO_BINDING_POINT);
 
 		// -- Sprite Vertex Data
 		glCreateVertexArrays(1, &m_SpriteVao);

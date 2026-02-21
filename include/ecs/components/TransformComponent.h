@@ -24,7 +24,7 @@ namespace Aurora
 			m_ModelMatrix = glm::translate(
 				m_ModelMatrix, glm::vec3(translation.x, translation.y, 0.0f));
 
-			onTransformChange.Dispatch(m_ModelMatrix, m_Position, m_Rotation, m_Scale);
+			OnTransformChange.Dispatch(m_ModelMatrix);
 		}
 
 		void Rotate(const glm::vec2& axis, f32 rad)
@@ -33,7 +33,7 @@ namespace Aurora
 			m_ModelMatrix =
 				glm::rotate(m_ModelMatrix, rad, glm::vec3(axis.x, axis.y, 0.0f));
 
-			onTransformChange.Dispatch(m_ModelMatrix, m_Position, m_Rotation, m_Scale);
+			OnTransformChange.Dispatch(m_ModelMatrix);
 		}
 
 		void Scale(const glm::vec2& scale)
@@ -42,7 +42,7 @@ namespace Aurora
 			m_ModelMatrix =
 				glm::scale(m_ModelMatrix, glm::vec3(scale.x, scale.y, 0.0f));
 
-			onTransformChange.Dispatch(m_ModelMatrix, m_Position, m_Rotation, m_Scale);
+			OnTransformChange.Dispatch(m_ModelMatrix);
 		}
 
 		void Scale(f32 scalar) { Scale(glm::vec2(scalar, scalar)); }
@@ -60,7 +60,7 @@ namespace Aurora
 
 		// -- Events
 		// [Args]: Model Matrix, Position, Rotation, Scale
-		Event<glm::mat4, glm::vec2, glm::vec2, glm::vec2> onTransformChange;
+		Event<glm::mat4> OnTransformChange;
 
 		glm::mat4 m_ModelMatrix = glm::mat4(1.0f);
 		glm::vec2 m_Position = glm::vec2(0.0f);

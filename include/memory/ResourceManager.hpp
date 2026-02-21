@@ -12,7 +12,7 @@ namespace Aurora {
 	class ResourceManager {
 	public:
 
-		ResourceManager() { m_TextureTable.reserve(1000); m_ShaderTable.reserve(50); }
+		ResourceManager() {}
 
 		Shader* LoadShader(const std::string& path);
 

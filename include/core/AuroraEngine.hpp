@@ -13,12 +13,6 @@ namespace Aurora {
 		void Update();
 		void Render();
 
-	public:
-		// -- EVENTS
-		Aurora::Event<> OnUpdate;
-		Aurora::Event<> OnRender;
-		Aurora::Event<> OnQuit;
-
 	private:
 		// Thread Safe Application Run State
 		std::atomic<bool> m_IsRunning = false;

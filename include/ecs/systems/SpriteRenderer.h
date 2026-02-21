@@ -16,7 +16,5 @@ namespace Aurora
 		~SpriteRenderer();
 
 		void Render(Shader& shader);
-
-	private:
 	};
 }
