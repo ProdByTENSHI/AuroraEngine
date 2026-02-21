@@ -8,6 +8,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "globals/AuroraTypes.hpp"
+#include "globals/EngineConstants.hpp"
 
 namespace Aurora
 {
@@ -18,7 +19,7 @@ namespace Aurora
 	public:
 		Shader();
 		// Create a Shader from external Shader Source Files
-		Shader(const std::string& vertexPath, const std::string& fragmentPath);
+		Shader(const std::string& name);
 		~Shader();
 
 		void Bind();
@@ -51,6 +52,7 @@ namespace Aurora
 
 		// Internal Shader ID
 		const u32 m_Id;
+		const std::string m_Name;
 
 	private:
 		// Create Shader from Vertex Shader Source and Fragment Shader Source

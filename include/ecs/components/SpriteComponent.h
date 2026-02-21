@@ -10,11 +10,11 @@ namespace Aurora
 	class SpriteComponent : public virtual Component
 	{
 	public:
-		SpriteComponent(std::shared_ptr<Texture> texture);
+		SpriteComponent(Texture* texture);
 
 		ComponentType GetType() override;
 
 	public:
-		const std::shared_ptr<Texture> m_Texture = nullptr;
+		const Texture* m_Texture = nullptr;
 	};
 }

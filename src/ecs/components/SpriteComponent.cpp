@@ -1,7 +1,7 @@
 #include "ecs/components/SpriteComponent.h"
 
 namespace Aurora {
-	SpriteComponent::SpriteComponent(std::shared_ptr<Texture> texture)
+	SpriteComponent::SpriteComponent(Texture* texture)
 		: m_Texture(texture) {
 	}
 

@@ -167,6 +167,9 @@
     <ClInclude Include="include\tenshiUtil\memory\UniformBuffer.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="include\globals\EngineConstants.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

@@ -13,16 +13,17 @@ namespace Aurora
 
 	Shader::Shader() : m_Id(s_IdCount++) {}
 
-	Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath)
-		: m_Program(0), m_VertexShader(0), m_FragmentShader(0), m_Id(s_IdCount++)
+	Shader::Shader(const std::string& name)
+		: m_Program(0), m_VertexShader(0), m_FragmentShader(0), m_Id(s_IdCount++), m_Name()
 	{
-		std::string vertexSource = LoadShader(vertexPath);
-		std::string fragmentSource = LoadShader(fragmentPath);
+		std::string _loc = SHADER_LOCATION;
+		_loc += OS_SEP;
+		_loc.append(name);
+
+		std::string vertexSource = LoadShader(_loc + ".vert");
+		std::string fragmentSource = LoadShader(_loc + ".frag");
 
 		Create(vertexSource, fragmentSource);
-
-		//Logger::getInstance()->write("Loaded Shader " + vertexPath + " : " + fragmentPath);
-		std::cout << "Loaded Shader " << vertexPath << " : " << fragmentPath << std::endl;
 	}
 
 	Shader::~Shader()

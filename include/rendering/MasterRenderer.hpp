@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <memory>
 #include <vector>
 
@@ -9,6 +10,7 @@
 #include "memory/Texture.h"
 #include "memory/Vertex.h"
 #include "tenshiUtil/memory/Ssbo.h"
+#include "tenshiUtil/memory/UniformBuffer.h"
 #include "tenshiUtil/memory/UniformBuffer.h"
 
 namespace Aurora {
@@ -21,6 +23,7 @@ namespace Aurora {
 	constexpr u64 TEXTURE_SHIFT = 0;
 
 	constexpr u32 ENTITY_IDS_SSBO_BINDING_POINT = 0;
+	constexpr u32 TRANSFORM_MATRICES_UBO_BINDING_POINT = 0;
 
 	// VAO Data Layout
 	const u32 VAO_POS_INDEX = 0;
@@ -30,14 +33,14 @@ namespace Aurora {
 	inline static const Vertex QUAD_VERTICES[6] =
 	{
 		// First triangle
-		Vertex(-0.5f, -0.5f, 0.0f, 0.0f),
-		Vertex(0.5f, -0.5f, 1.0f, 0.0f),
-		Vertex(0.5f,  0.5f, 1.0f, 1.0f),
+		Vertex(1.0f, 1.0f, 1.0f, 1.0f),
+		Vertex(1.0f, -1.0f, 1.0f, 0.0f),
+		Vertex(-1.0f, 1.0f, 0.0f, 1.0f),
 
 		// Second triangle
-		Vertex(0.5f,  0.5f, 1.0f, 1.0f),
-		Vertex(-0.5f,  0.5f, 0.0f, 1.0f),
-		Vertex(-0.5f, -0.5f, 0.0f, 0.0f)
+		Vertex(1.0f, -1.0f, 1.0f, 0.0f),
+		Vertex(-1.0f, -1.0f, 0.0f, 0.0f),
+		Vertex(-1.0f, 1.0f, 0.0f, 1.0f)
 	};
 
 	constexpr uint64_t BuildSortKey(
@@ -65,13 +68,13 @@ namespace Aurora {
 		Foreground = 3
 	};
 
-	struct RenderCommand {
+	typedef struct RenderCommand {
 	public:
 		// Sort Key - We Sort the Render Commands at Flushing Stage by this Key
 		u64 m_SortKey = 0;
 
-		std::shared_ptr<Texture> m_Texture;
-		std::shared_ptr<Shader> m_Shader;
+		u32 m_Texture;
+		u32 m_Shader;
 
 		// MSB R: << 24
 		//     G  << 16
@@ -79,16 +82,7 @@ namespace Aurora {
 		// LSB A
 		u32 m_Color = 0;
 
-		f32 m_PosX = 0.0f;
-		f32 m_PosY = 0.0f;
-		f32 m_Width = 0.0f;
-		f32 m_Height = 0.0f;
-
-		// Rotations are stored as radians internally
-		// Rotations are performed from the Pivot Point
-		f32 m_Rotation = 0.0f;
-		f32 m_PivotX = 0.0f;
-		f32 m_PivotY = 0.0f;
+		glm::mat4 m_TransformationMatrix;
 
 		u8  m_Transparency = 0xFF;
 		i8  m_Depth = 0;
@@ -102,13 +96,18 @@ namespace Aurora {
 		}
 	};
 
+	static const u32 MAX_CMD_PER_BATCH
+		= GL_MAX_UNIFORM_BLOCK_SIZE / sizeof(RenderCommand);
+
 	// A Batch is a group of Entities to Render with the same
 	// Layer, Depth, Shader and Texture
 	struct RenderBatch {
 		// Important Data for the Batch can be retrieved from Key
 		u64 m_SortKey = 0;
 
-		std::vector<RenderCommand> m_Commands;
+		std::array<RenderCommand, MAX_CMD_PER_BATCH>
+			m_Commands;
+		u32 m_CmdCount = 0;
 
 		u32 m_ShaderId = 0;
 		u32 m_Texture = 0;
@@ -131,8 +130,9 @@ namespace Aurora {
 
 	public:
 		Ssbo m_EntityIdsSsbo;
+		UniformBuffer m_TransformMatrices;
 
-		std::shared_ptr<Shader> m_SpriteShader = nullptr;
+		Shader* m_SpriteShader = nullptr;
 
 	private:
 		// Systems can push their Render Command to this Buffer

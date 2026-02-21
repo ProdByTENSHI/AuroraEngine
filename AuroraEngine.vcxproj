@@ -55,6 +55,7 @@
     <ClInclude Include="include\ecs\systems\SpriteRenderer.h" />
     <ClInclude Include="include\ecs\systems\SpriteSheetRenderer.h" />
     <ClInclude Include="include\globals\AuroraTypes.hpp" />
+    <ClInclude Include="include\globals\EngineConstants.hpp" />
     <ClInclude Include="include\globals\EngineGlobals.hpp" />
     <ClInclude Include="include\input\InputState.hpp" />
     <ClInclude Include="include\input\InputSystem.hpp" />

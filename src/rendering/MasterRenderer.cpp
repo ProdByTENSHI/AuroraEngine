@@ -4,11 +4,16 @@
 
 namespace Aurora {
 	MasterRenderer::MasterRenderer() {
+		Logger::Instance().Log("Max Commands per Draw Batch "
+			+ std::to_string(MAX_CMD_PER_BATCH));
 		m_SpriteShader = g_ResourceManager->LoadShader("sprite");
 		m_SpriteShader->Bind();
 
 		m_EntityIdsSsbo.Create(sizeof(i32) * MAX_SPRITES_PER_BATCH, "EntityIds");
-		m_EntityIdsSsbo.BindToShader(*m_SpriteShader.get(), ENTITY_IDS_SSBO_BINDING_POINT);
+		m_EntityIdsSsbo.BindToShader(*m_SpriteShader, ENTITY_IDS_SSBO_BINDING_POINT);
+
+		m_TransformMatrices.Create(MAX_CMD_PER_BATCH, "TransformMatrices");
+		m_TransformMatrices.BindToShader(*m_SpriteShader, TRANSFORM_MATRICES_UBO_BINDING_POINT);
 
 		// -- Sprite Vertex Data
 		glCreateVertexArrays(1, &m_SpriteVao);
@@ -32,35 +37,38 @@ namespace Aurora {
 
 		// Batch together Sprites that use the same Shader and Texture
 		RenderBatch _currentBatch = { 0 };
-		std::shared_ptr<Texture> _lastTexture;
-		std::shared_ptr<Shader> _lastShader;
+		u32 _lastTexture = 0;
+		u32 _lastShader = 0;
 
-		for (const auto& cmd : m_RenderCmdBuffer) {
-			if (cmd.m_Texture.get() != _lastTexture.get()
-				|| cmd.m_Shader.get() != _lastShader.get()) {
+		for (auto cmd : m_RenderCmdBuffer) {
+			if (cmd.m_Texture != _lastTexture
+				|| cmd.m_Shader != _lastShader) {
 				// New batch (bind the previous one and start a new one)
 				if (!_currentBatch.m_Commands.empty()) {
 					m_Batches.push_back(_currentBatch);
-					_currentBatch.m_Commands.clear();
+
+					// "Reset" m_Commands Array
+					_currentBatch.m_CmdCount = 0;
 				}
 				_lastTexture = cmd.m_Texture;
 				_lastShader = cmd.m_Shader;
 			}
-			_currentBatch.m_Commands.push_back(cmd);
+			_currentBatch.m_Commands[_currentBatch.m_CmdCount++] = cmd;
 		}
 		if (!_currentBatch.m_Commands.empty()) {
 			m_Batches.push_back(_currentBatch); // Push the last batch
 		}
 
 		// Render
-
 		u32 _baseOffset = 0;
 		for (auto& batch : m_Batches) {
-			glBindTexture(GL_TEXTURE_2D, batch.m_Texture);
+			glBindVertexArray(m_SpriteVao);
+			g_ResourceManager->LoadTexture(batch.m_Texture)->Bind();
 			glDrawArraysInstancedBaseInstance(GL_TRIANGLES, 0, 6,
 				batch.m_Commands.size(), _baseOffset);
 			_baseOffset += batch.m_Commands.size();
-			glBindTexture(GL_TEXTURE_2D, 0);
+			g_ResourceManager->LoadTexture(batch.m_Texture)->Unbind();
+			glBindVertexArray(0);
 		}
 	}
 
@@ -68,7 +76,7 @@ namespace Aurora {
 		RenderCommand _cmd = command;
 
 		_cmd.m_SortKey = BuildSortKey(_cmd.m_Layer, _cmd.m_Depth,
-			_cmd.m_Shader->m_Id, _cmd.m_Texture->m_Id);
+			_cmd.m_Shader, _cmd.m_Texture);
 
 		m_RenderCmdBuffer.push_back(_cmd);
 	}
