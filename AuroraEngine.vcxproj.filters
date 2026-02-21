@@ -42,9 +42,6 @@
     <ClCompile Include="src\ecs\components\TransformComponent.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="src\input\InputSystem.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="src\ecs\components\SpriteComponent.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -120,12 +117,6 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="include\rendering\MasterRenderer.hpp">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="include\input\InputSystem.hpp">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="include\input\InputState.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="include\ecs\components\SpriteComponent.h">

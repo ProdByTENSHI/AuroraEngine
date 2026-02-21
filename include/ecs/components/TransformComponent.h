@@ -1,6 +1,5 @@
 #pragma once
 
-#include <SDL.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -46,17 +45,6 @@ namespace Aurora
 		}
 
 		void Scale(f32 scalar) { Scale(glm::vec2(scalar, scalar)); }
-
-		SDL_Rect ToSDLRect() {
-			SDL_Rect rect;
-
-			rect.w = m_Scale.x;
-			rect.h = m_Scale.y;
-			rect.x = m_Position.x;
-			rect.y = m_Position.y;
-
-			return rect;
-		}
 
 		// -- Events
 		// [Args]: Model Matrix, Position, Rotation, Scale

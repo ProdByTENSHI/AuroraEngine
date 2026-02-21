@@ -31,7 +31,6 @@
     <ClCompile Include="src\ecs\System.cpp" />
     <ClCompile Include="src\ecs\systems\SpriteRenderer.cpp" />
     <ClCompile Include="src\ecs\systems\SpriteSheetRenderer.cpp" />
-    <ClCompile Include="src\input\InputSystem.cpp" />
     <ClCompile Include="src\memory\Shader.cpp" />
     <ClCompile Include="src\memory\SpriteSheet.cpp" />
     <ClCompile Include="src\memory\Texture.cpp" />
@@ -57,8 +56,6 @@
     <ClInclude Include="include\globals\AuroraTypes.hpp" />
     <ClInclude Include="include\globals\EngineConstants.hpp" />
     <ClInclude Include="include\globals\EngineGlobals.hpp" />
-    <ClInclude Include="include\input\InputState.hpp" />
-    <ClInclude Include="include\input\InputSystem.hpp" />
     <ClInclude Include="include\memory\Shader.h" />
     <ClInclude Include="include\memory\SpriteSheet.h" />
     <ClInclude Include="include\memory\Texture.h" />
@@ -163,7 +160,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)vendor/stb;$(SolutionDir)vendor/glew-2.1.0/include;$(SolutionDir)vendor/glm/;$(SolutionDir)AuroraEngine/include/;$(SolutionDir)vendor/SDL2/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)vendor/stb;$(SolutionDir)vendor/glew-2.1.0/include;$(SolutionDir)vendor/glm/;$(SolutionDir)AuroraEngine/include/;$(SolutionDir)vendor/glfw-3.4/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -171,8 +168,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)vendor/glew-2.1.0/lib;$(SolutionDir)vendor/SDL2/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)vendor/glfw-3.4/lib;$(SolutionDir)vendor/glew-2.1.0/lib;$(SolutionDir)vendor/SDL2/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

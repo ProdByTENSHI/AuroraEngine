@@ -1,13 +1,13 @@
 #pragma once
 
-#include <SDL.h>
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include <thread>
 
 #include "debug/Logger.hpp"
 #include "ecs/ECS.h"
 #include "globals/AuroraTypes.hpp"
 
-#include "input/InputSystem.hpp"
 #include "memory/ResourceManager.hpp"
 #include "rendering/MasterRenderer.hpp"
 #include "window/Window.hpp"
@@ -17,13 +17,11 @@ namespace Aurora {
 	inline u32 g_WindowWidth = 1280;
 	inline u32 g_WindowHeight = 720;
 	inline charStr g_WindowTitle = "Neko Island";
-	inline u32 g_WindowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL;
 
 	inline Window* g_Window = nullptr;
 
 	// -- RENDERING
 	inline std::unique_ptr<MasterRenderer> g_MasterRenderer;
-	inline SDL_GLContext g_GLContext;
 
 	// -- ECS
 	inline std::unique_ptr<Ecs> g_Ecs;
@@ -32,15 +30,8 @@ namespace Aurora {
 	inline std::unique_ptr<ResourceManager> g_ResourceManager;
 	inline std::thread g_ResourceThread;
 
-	// -- INPUT
-	inline std::unique_ptr<InputSystem> g_InputManager;
-
 	// -- EVENTS
 	inline Aurora::Event<> OnUpdate;
 	inline Aurora::Event<> OnRender;
 	inline Aurora::Event<> OnQuit;
-
-	// -- GLOBALS
-	inline const u32 MAX_SPRITES = 500000;
-	inline const u32 MAX_SPRITES_PER_BATCH = 1000;
 }

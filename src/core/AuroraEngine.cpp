@@ -1,13 +1,12 @@
 #include "core/AuroraEngine.hpp"
 
 #include "globals/EngineGlobals.hpp"
+#include <GL/glew.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
 #include <sstream>
-
-#include <GL/glew.h>
 
 namespace Aurora {
 	void glewMessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity,
@@ -70,38 +69,26 @@ namespace Aurora {
 	}
 
 	AuroraEngine::AuroraEngine() {
-		// Initialize SDL
-		if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
-			Logger::Instance().Log("Could not initialize SDL2", LogType::Error);
+		// Initialize GLFW
+		if (glfwInit() == GLFW_FALSE)
+			Logger::Instance().Log("Could not initialize GLFW", LogType::Error);
 
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
-			SDL_GL_CONTEXT_PROFILE_CORE);
-		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, SDL_TRUE);
+		glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 		g_Window = new Window(g_WindowTitle, g_WindowWidth,
-			g_WindowHeight, g_WindowFlags);
+			g_WindowHeight);
 
-		g_GLContext = SDL_GL_CreateContext(g_Window->m_Window);
-		if (g_GLContext == NULL) {
-			Logger::Instance().Log("No GL Context " + std::to_string(glGetError()),
-				LogType::Error);
-		}
-
-		u32 _currStatus = SDL_GL_MakeCurrent(g_Window->m_Window, g_GLContext);
-		if (_currStatus < 0) {
-			Logger::Instance().Log("Context not Current " + std::to_string(glGetError()),
-				LogType::Error);
-		}
+		glfwMakeContextCurrent(g_Window->m_Window);
 
 		printf("GL Version: %s\n", glGetString(GL_VERSION));
 		printf("GLSL Version: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
-		SDL_GL_SetSwapInterval(1); // Enable VSync
+		glfwSwapInterval(1); // Enable VSync
 
 		// Initialize OpenGL Glew
-		glewExperimental = GL_TRUE;
 		GLenum _glInit = glewInit();
 		if (_glInit != GLEW_OK) {
 			std::cerr << "Could not initialize Glew. Error: " << glewGetErrorString(_glInit) << std::endl;
@@ -117,7 +104,6 @@ namespace Aurora {
 		g_MasterRenderer = std::make_unique<MasterRenderer>();
 		g_Ecs = std::make_unique<Ecs>();
 		g_Ecs->Init();
-		g_InputManager = std::make_unique<InputSystem>();
 
 		m_IsRunning = true;
 	}
@@ -128,38 +114,10 @@ namespace Aurora {
 
 	void AuroraEngine::Update() {
 		while (m_IsRunning) {
-			g_InputManager->SwapBuffers();
-
 			// Process Event Queue before Updating
 			// This must be done in the Main Thread
-			SDL_Event e;
-			while (SDL_PollEvent(&e)) {
-				// -- APPLICATION EVENTS --
-				switch (e.type) {
-				case SDL_QUIT:
-					m_IsRunning = false;
-					break;
 
-				case SDL_WINDOWEVENT:
-					switch (e.window.event) {
-					case SDL_WINDOWEVENT_RESIZED:
-						i32 _w = 0;
-						i32 _h = 0;
-
-						SDL_GetWindowSize(g_Window->m_Window, &_w, &_h);
-						SDL_UpdateWindowSurface(g_Window->m_Window);
-						glViewport(0, 0, _w, _h);
-
-						g_Window->OnResize.Dispatch(_w, _h);
-
-						break;
-					}
-					break;
-				}
-
-				// -- OTHER --
-				g_InputManager->Process(e);
-			}
+			glfwPollEvents();
 
 			OnUpdate.Dispatch();
 
@@ -174,6 +132,6 @@ namespace Aurora {
 		OnRender.Dispatch();
 		g_MasterRenderer->Render();
 
-		SDL_GL_SwapWindow(g_Window->m_Window);
+		glfwSwapBuffers(g_Window->m_Window);
 	}
 }

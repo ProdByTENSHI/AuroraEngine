@@ -1,7 +1,9 @@
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
 #include "globals/AuroraTypes.hpp"
 #include "tenshiUtil/eventsystem/EventSystem.h"
 
-#include <SDL.h>
 #include <thread>
 
 namespace Aurora {
