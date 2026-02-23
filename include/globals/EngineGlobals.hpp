@@ -8,6 +8,7 @@
 #include "ecs/ECS.h"
 #include "globals/AuroraTypes.hpp"
 
+#include "input/InputSystem.hpp"
 #include "memory/ResourceManager.hpp"
 #include "rendering/MasterRenderer.hpp"
 #include "window/Window.hpp"
@@ -29,6 +30,12 @@ namespace Aurora {
 	// -- MEMORY
 	inline std::unique_ptr<ResourceManager> g_ResourceManager;
 	inline std::thread g_ResourceThread;
+
+	// -- INPUT
+	inline std::unique_ptr<InputSystem> g_InputSystem;
+
+	// -- PHYSICS
+	inline double g_DeltaTime;
 
 	// -- EVENTS
 	inline Aurora::Event<> OnUpdate;

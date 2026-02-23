@@ -69,7 +69,7 @@ namespace Aurora {
 
 	void MasterRenderer::StageBufferData() {
 		std::vector<glm::mat4> stagedMatrices;
-		std::vector<u32> stagedEntityIds;
+		std::vector<Entity> stagedEntityIds;
 
 		stagedMatrices.reserve(m_RenderCmdBuffer.size());
 		stagedEntityIds.reserve(m_RenderCmdBuffer.size());
@@ -82,6 +82,6 @@ namespace Aurora {
 
 		// Single upload for both
 		m_TransformMatrices.SubBufferData(0, stagedMatrices.size() * sizeof(glm::mat4), stagedMatrices.data());
-		m_EntityIdsSsbo.SubBufferData(0, stagedEntityIds.size() * sizeof(u32), stagedEntityIds.data());
+		m_EntityIdsSsbo.SubBufferData(0, stagedEntityIds.size() * sizeof(Entity), stagedEntityIds.data());
 	}
 }

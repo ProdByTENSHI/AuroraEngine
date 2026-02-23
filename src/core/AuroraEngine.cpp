@@ -104,6 +104,7 @@ namespace Aurora {
 		g_MasterRenderer = std::make_unique<MasterRenderer>();
 		g_Ecs = std::make_unique<Ecs>();
 		g_Ecs->Init();
+		g_InputSystem = std::make_unique<InputSystem>();
 
 		m_IsRunning = true;
 	}
@@ -113,11 +114,24 @@ namespace Aurora {
 	}
 
 	void AuroraEngine::Update() {
+		f32 _currentFrameTime = 0.0f;
+		f32 _lastFrameTime = 0.0f;
+
 		while (m_IsRunning) {
+			_currentFrameTime = glfwGetTime();
+			g_DeltaTime = _currentFrameTime - _lastFrameTime;
+			_lastFrameTime = _currentFrameTime;
+
+			g_InputSystem->SwapBuffers();
+
 			// Process Event Queue before Updating
 			// This must be done in the Main Thread
-
 			glfwPollEvents();
+
+			if (glfwWindowShouldClose(g_Window->m_Window))
+				m_IsRunning = false;
+
+			g_InputSystem->Update();
 
 			OnUpdate.Dispatch();
 
