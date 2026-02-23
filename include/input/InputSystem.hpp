@@ -17,7 +17,7 @@ namespace Aurora {
 
 		// Returns the final Input State
 		// -> Processing Methods will be called before this
-		InputState& GetInputState();
+		InputState& GetInputState() { return *m_CurrentState; }
 
 		std::string KeyToString(AuroraKey key);
 
@@ -36,6 +36,6 @@ namespace Aurora {
 
 	private:
 		// Seconds it takes the Key to be registered as "Hold"
-		const f32 HOLD_MIN_DURATION = 0.3f;
+		const f32 HOLD_MIN_DURATION = 0.03f;
 	};
 }

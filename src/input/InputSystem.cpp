@@ -31,7 +31,6 @@ namespace Aurora {
 			// 1. Detection: Key was JUST released
 			if (_prevKey.m_State != KeyState::Release && _key.m_State == KeyState::Release) {
 				_key.m_Duration = 0;
-				Logger::Instance().Log(KeyToString(_key.m_Key) + " was Released");
 				continue;
 			}
 
@@ -39,15 +38,9 @@ namespace Aurora {
 			if (_key.m_State == KeyState::Press || _key.m_State == KeyState::Hold) {
 				_key.m_Duration += g_DeltaTime;
 
-				// Only log "pressed" on the very first frame it happens
-				if (_prevKey.m_State == KeyState::Release) {
-					Logger::Instance().Log(KeyToString(_key.m_Key) + " was Pressed");
-				}
-
 				// 3. Transition to Hold state
 				if (_key.m_Duration >= HOLD_MIN_DURATION && _key.m_State != KeyState::Hold) {
 					_key.m_State = KeyState::Hold;
-					Logger::Instance().Log(KeyToString(_key.m_Key) + " is now being HELD");
 				}
 			}
 		}

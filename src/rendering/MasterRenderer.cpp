@@ -52,6 +52,9 @@ namespace Aurora {
 				batchStart = i;
 			}
 		}
+
+		m_RenderCmdBuffer.clear();
+		m_Batches.clear();
 	}
 
 	void MasterRenderer::PushRenderCommand(RenderCommand command) {

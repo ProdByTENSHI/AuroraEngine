@@ -13,6 +13,9 @@ namespace Aurora {
 		void Render();
 
 	private:
+		void HandleEngineEvents();
+
+	private:
 		// Thread Safe Application Run State
 		std::atomic<bool> m_IsRunning = false;
 	};

@@ -68,6 +68,10 @@ namespace Aurora {
 		Logger::Instance().Log(_output.str());
 	}
 
+#pragma region Engine Callbacks
+
+#pragma endregion
+
 	AuroraEngine::AuroraEngine() {
 		// Initialize GLFW
 		if (glfwInit() == GLFW_FALSE)
@@ -128,6 +132,8 @@ namespace Aurora {
 			// This must be done in the Main Thread
 			glfwPollEvents();
 
+			HandleEngineEvents();
+
 			if (glfwWindowShouldClose(g_Window->m_Window))
 				m_IsRunning = false;
 
@@ -147,5 +153,11 @@ namespace Aurora {
 		g_MasterRenderer->Render();
 
 		glfwSwapBuffers(g_Window->m_Window);
+	}
+
+	void AuroraEngine::HandleEngineEvents() {
+		if (glfwWindowShouldClose(g_Window->m_Window)) {
+			m_IsRunning = false;
+		}
 	}
 }
